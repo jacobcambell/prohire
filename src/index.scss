@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+html, body{
+    width: 100%;
+    height: 100%;
+    background: #242424;
+}
+
+$navColor: black;
+$highlight: #eebd22;
+
+.navbar{
+    height: 60px;
+    background: $navColor;
+
+    .logo{
+        position: absolute;
+        left: 25px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: white;
+        font-size: 18px;
+    }
+}
+
+.prolist{        
+    text-align: center;
+}
+
+.protile{
+    width: 250px;
+    height: 250px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 25px;
+
+    .name{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background: rgba(0,0,0,0.7);
+        width: 100%;
+        height: 50px;
+
+        p{
+            color: white;
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }    
+}
+
+.prodetails{    
+    margin: auto;
+
+    .inforow{
+        padding: 30px 0;
+        width: 1200px;
+        margin: auto;        
+
+        .name{
+            font-size: 22px;
+            color: white;
+        }
+
+        .profession{
+            font-size: 18px;
+            color: white;
+        }
+
+        .schedule{
+            background: transparent;
+            color: $highlight;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 1px solid $highlight;            
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    }
+
+    .gallery{        
+        margin: auto;
+        height: 200px;
+        text-align: center; 
+        background: black;
+        padding: 50px 0;
+    
+        .galleryimage{
+            display: inline-block;
+            vertical-align: top;
+            width: 200px;
+            height: 200px;
+            margin: 0 15px;
+            background-position: center;
+            background-repeat: no-repeat;    
+        }
+    }
+
+    .bio{
+        background: black;
+        width: 1200px;
+        margin: 25px auto;
+        box-sizing: border-box;
+        padding: 25px;
+
+        .title{
+            color: #f26d7d;
+            font-size: 22px;
+        }
+
+        .bioContent{
+            color: white;
+            padding: 10px 0;
+            font-size: 18px;
+            font-weight: lighter;
+        }
+    }
+}
