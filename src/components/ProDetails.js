@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
 import Gallery from "./Gallery";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const ProDetails = () => {
     const {slug} = useParams();    
@@ -27,7 +28,7 @@ const ProDetails = () => {
             <div className="inforow">
                 <p className="name">{name}</p>
                 <p className="profession">{profession}</p>
-                <button className="schedule">Schedule Now</button>
+                <Link to="/schedule" className="schedule">Schedule Now</Link>
             </div>
 
             <Gallery images={images}></Gallery>
