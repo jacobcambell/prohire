@@ -1,7 +1,11 @@
+import ProList from './ProList';
+
 const Schedule = () => {
     return ( 
         <div className="schedule">
-            <p>schedule</p>
+            <p className="title">Schedule</p>
+
+            <ProList></ProList>
         </div>
      );
 }

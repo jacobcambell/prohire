@@ -83,7 +83,7 @@ $highlight: #eebd22;
             color: white;
         }
 
-        .schedule{
+        .scheduleBtn{
             background: transparent;
             color: $highlight;
             position: absolute;
@@ -94,7 +94,7 @@ $highlight: #eebd22;
             padding: 5px 10px;
             border-radius: 5px;
             font-size: 20px;
-            cursor: pointer;
+            cursor: pointer;            
         }
     }
 
@@ -134,5 +134,16 @@ $highlight: #eebd22;
             font-size: 18px;
             font-weight: lighter;
         }
+    }
+}
+
+.schedule{
+    width: 1200px;
+    margin: 25px auto;
+    
+    .title{
+        font-size: 20px;
+        color: white;
+        text-align: center;
     }
 }

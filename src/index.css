@@ -83,7 +83,7 @@ html, body {
   color: white;
 }
 
-.prodetails .inforow .schedule {
+.prodetails .inforow .scheduleBtn {
   background: transparent;
   color: #eebd22;
   position: absolute;
@@ -135,5 +135,16 @@ html, body {
   padding: 10px 0;
   font-size: 18px;
   font-weight: lighter;
+}
+
+.schedule {
+  width: 1200px;
+  margin: 25px auto;
+}
+
+.schedule .title {
+  font-size: 20px;
+  color: white;
+  text-align: center;
 }
 /*# sourceMappingURL=index.css.map */
