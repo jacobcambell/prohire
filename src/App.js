@@ -4,6 +4,7 @@ import ProList from './components/ProList';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ProDetails from './components/ProDetails';
 import Schedule from './components/Schedule';
+import Admin from './components/Admin';
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
           </Route>
           <Route exact path="/schedule">
             <Schedule></Schedule>
+          </Route>
+          <Route exact path="/admin">
+            <Admin></Admin>
           </Route>
         </Switch>
       </Router>            
