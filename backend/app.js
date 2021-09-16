@@ -80,7 +80,7 @@ app.post('/adminlogin', (req, res) => {
                 // res.json() line and the browser was not setting cookies, likely because the data was already returned with res.json()
                 // before I had a chance to send the cookie with it
                 req.session.admin_logged_in = true;
-                res.json({message: 'Successful login'})
+                res.json({message: 'Successful login', success: true})
                 return;
             }
             else{

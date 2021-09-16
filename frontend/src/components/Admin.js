@@ -18,8 +18,13 @@ const Admin = () => {
         })
         .then(result => result.json())
         .then((data) => {
-            // history.push('/');
-            console.log(data)
+            if(data.success){
+                // Server says we have successfully logged in
+                history.push('/admin/dashboard');
+            }
+            else{
+                // Login failed, show error here
+            }
         })
     }
 
@@ -29,7 +34,10 @@ const Admin = () => {
         })
         .then(result => result.json())
         .then((data) => {
-            console.log(data)
+            if(data.admin_logged_in){
+                // User is already logged in as an admin
+                history.push('/admin/dashboard');
+            }
         })
     }, [])
 
