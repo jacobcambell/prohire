@@ -5,12 +5,14 @@ import Admin from './components/Admin';
 import Footer from './components/Footer';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Dashboard from './components/AdminDashboard/Dashboard';
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Navbar></Navbar>
+
         <Switch>
           <Route exact path="/">
             <ProList></ProList>
@@ -21,7 +23,11 @@ function App() {
           <Route exact path="/admin">
             <Admin></Admin>
           </Route>
+          <Route exact path="/admin/dashboard">
+            <Dashboard></Dashboard>
+          </Route>
         </Switch>
+
         <Footer></Footer>
       </Router>
     </div>
