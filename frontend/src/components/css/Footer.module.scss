@@ -1,0 +1,27 @@
+.footer{
+    background: black;
+    padding: 25px 0;
+
+    .center{
+        width: 1200px;
+        height: 100%;
+        margin: auto;
+
+        .section{
+            display: inline-block;
+            height: 100%;
+            margin-right: 100px;
+
+            .title{
+                color: #959595;
+                font-size: 18px;
+            }
+
+            .link{
+                color: white;
+                display: table;
+                margin: 5px 0;
+            }
+        }
+    }
+}

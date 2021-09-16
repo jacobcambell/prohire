@@ -1,0 +1,28 @@
+.footer {
+  background: black;
+  padding: 25px 0;
+}
+
+.footer .center {
+  width: 1200px;
+  height: 100%;
+  margin: auto;
+}
+
+.footer .center .section {
+  display: inline-block;
+  height: 100%;
+  margin-right: 100px;
+}
+
+.footer .center .section .title {
+  color: #959595;
+  font-size: 18px;
+}
+
+.footer .center .section .link {
+  color: white;
+  display: table;
+  margin: 5px 0;
+}
+/*# sourceMappingURL=Footer.module.css.map */

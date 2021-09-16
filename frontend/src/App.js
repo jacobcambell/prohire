@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ProDetails from './components/ProDetails';
 import Schedule from './components/Schedule';
 import Admin from './components/Admin';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -25,7 +26,8 @@ function App() {
             <Admin></Admin>
           </Route>
         </Switch>
-      </Router>            
+        <Footer></Footer>
+      </Router>
     </div>
   );
 }
