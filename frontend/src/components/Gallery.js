@@ -1,10 +1,11 @@
 import GalleryImage from "./GalleryImage";
+import styles from './css/Gallery.module.css';
 
 const Gallery = ({images}) => {
 
     // images should be an array of strings
-    return ( 
-        <div className="gallery">            
+    return (
+        <div className={styles.gallery}>
             {
                 images &&
                 images.map((image) => (
@@ -14,5 +15,5 @@ const Gallery = ({images}) => {
         </div>
      );
 }
- 
+
 export default Gallery;

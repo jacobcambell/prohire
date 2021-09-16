@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import styles from './css/Admin.module.css';
 
 const Admin = () => {
 
@@ -33,14 +34,14 @@ const Admin = () => {
     }, [])
 
     return (
-        <div className="admin">
-            <p className="label">Username</p>
-            <input type="text" onChange={(e) => { setUsername(e.target.value) }} className="field"/>
+        <div className={styles.admin}>
+            <p className={styles.label}>Username</p>
+            <input type="text" onChange={(e) => { setUsername(e.target.value) }} className={styles.field}/>
 
-            <p className="label">Password</p>
-            <input type="password" onChange={(e) => { setPassword(e.target.value) }} className="field" />
+            <p className={styles.label}>Password</p>
+            <input type="password" onChange={(e) => { setPassword(e.target.value) }} className={styles.field} />
 
-            <button onClick={handleLogin} className="submit">Login</button>
+            <button onClick={handleLogin} className={styles.submit}>Login</button>
         </div>
      );
 }

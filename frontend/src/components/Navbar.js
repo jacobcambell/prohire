@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import styles from './css/Navbar.module.css';
 
 const Navbar = () => {
-    return ( 
-        <div className="navbar">
-            <Link to="/" className="logo">ProHire</Link>
+    return (
+        <div className={styles.navbar}>
+            <Link to="/" className={styles.logo}>ProHire</Link>
         </div>
      );
 }
- 
+
 export default Navbar;

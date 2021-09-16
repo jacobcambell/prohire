@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,QAAQ,CAAA;EACJ,MAAM,EAAE,IAAI;EACZ,MAAM,EAAE,KAAK;EACb,UAAU,EAAE,MAAM;EAClB,UAAU,EAAE,KAAK;EACjB,OAAO,EAAE,MAAM;CAClB",
+    "sources": [
+        "Gallery.module.scss"
+    ],
+    "names": [],
+    "file": "Gallery.module.css"
+}
