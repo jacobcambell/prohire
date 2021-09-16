@@ -11,24 +11,27 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar></Navbar>
-
         <Switch>
-          <Route exact path="/">
-            <ProList></ProList>
-          </Route>
-          <Route exact path="/professionals/:slug">
-            <ProDetails></ProDetails>
-          </Route>
-          <Route exact path="/admin">
-            <Admin></Admin>
-          </Route>
           <Route exact path="/admin/dashboard">
             <Dashboard></Dashboard>
           </Route>
-        </Switch>
 
-        <Footer></Footer>
+          <Route path="/">
+            <Navbar></Navbar>
+
+            <Route exact path="/">
+              <ProList></ProList>
+            </Route>
+            <Route exact path="/professionals/:slug">
+              <ProDetails></ProDetails>
+            </Route>
+            <Route exact path="/admin">
+              <Admin></Admin>
+            </Route>
+
+            <Footer></Footer>
+          </Route>
+        </Switch>
       </Router>
     </div>
   );
