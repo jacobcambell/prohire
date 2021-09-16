@@ -1,6 +1,6 @@
 {
     "version": 3,
-    "mappings": "",
+    "mappings": "AAAA,AAAA,UAAU,CAAA;EACN,UAAU,EAAE,KAAK;EACjB,MAAM,EAAE,KAAK;CAChB",
     "sources": [
         "Dashboard.module.scss"
     ],

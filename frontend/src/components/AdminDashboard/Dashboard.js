@@ -1,6 +1,7 @@
 import styles from './css/Dashboard.module.css';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router';
+import Nav from './Nav';
 
 const Dashboard = () => {
 
@@ -20,7 +21,9 @@ const Dashboard = () => {
     }, []);
 
     return (
-        <div>admin dashboard</div>
+        <div className={styles.dashboard}>
+            <Nav></Nav>
+        </div>
      );
 }
 
