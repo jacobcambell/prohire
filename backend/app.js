@@ -40,7 +40,7 @@ app.get('/getall', (req, res) => {
         let professionals = [];
 
         results.map((pro) => {
-            professionals.push({id: pro.id, fullname: pro.fullname, location_from: pro.location_from, profession: pro.profession, slug: pro.slug});
+            professionals.push({ id: pro.id, fullname: pro.fullname, location_from: pro.location_from, profession: pro.profession, slug: pro.slug });
         })
 
         res.json(professionals);
@@ -66,39 +66,74 @@ app.post('/adminlogin', (req, res) => {
     con.query('SELECT password FROM admins WHERE username=?', [username], (err, results) => {
         if (err) throw err;
 
-        if(results.length == 0){
+        if (results.length == 0) {
             // No user with that username found
-            res.json({message: 'No user with that username found!'});
+            res.json({ message: 'No user with that username found!' });
             return;
         }
-        else{
+        else {
             // Check if passwords match
-            if(results[0].password == password){
+            if (results[0].password == password) {
                 // Good match
                 // Note - There was an initial bug I had on this line, when setting session variables you have to set
                 // them BEFORE returning data to client (like with res.json()) I initially was setting session variables after the
                 // res.json() line and the browser was not setting cookies, likely because the data was already returned with res.json()
                 // before I had a chance to send the cookie with it
                 req.session.admin_logged_in = true;
-                res.json({message: 'Successful login', success: true})
+                res.json({ message: 'Successful login', success: true })
                 return;
             }
-            else{
+            else {
                 // Passwords don't match
-                res.json({message: 'Incorrect password!'});
+                res.json({ message: 'Incorrect password!' });
                 return;
             }
         }
     });
 })
 
+app.post('/create-professional', (req, res) => {
+    // Parameters:
+    // fullname
+    // location_from
+    // profession
+    // bio
+    // slug
+
+    let fullname = req.body.fullname;
+    let location_from = req.body.location_from;
+    let profession = req.body.profession;
+    let bio = req.body.bio;
+    let slug = req.body.slug;
+
+    if (typeof fullname === 'undefined' ||
+        typeof location_from === 'undefined' ||
+        typeof profession === 'undefined' ||
+        typeof bio === 'undefined' ||
+        typeof slug === 'undefined'
+    ) {
+        res.sendStatus(400);
+        return;
+    }
+    // Insert data into db
+    con.query(`INSERT INTO professionals
+                (fullname, location_from, profession, bio, slug)
+                VALUES (?, ?, ?, ?, ?)`,
+        [fullname, location_from, profession, bio, slug],
+        (err, results) => {
+            if (err) throw err;
+
+            res.json({ message: 'Created professional', success: true });
+        });
+})
+
 app.get('/adminloggedin', (req, res) => {
     // Is the user logged in as an admin?
-    if(req.session.admin_logged_in){
-        res.json({admin_logged_in: true})
+    if (req.session.admin_logged_in) {
+        res.json({ admin_logged_in: true })
     }
-    else{
-        res.json({admin_logged_in: false})
+    else {
+        res.json({ admin_logged_in: false })
     }
 })
 
