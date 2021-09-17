@@ -21,6 +21,22 @@
   margin: 5px 0 25px;
 }
 
+.page .label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.page .field {
+  display: block;
+  width: 25%;
+  margin-bottom: 25px;
+  padding: 5px;
+}
+
+.page textarea.field {
+  height: 200px;
+}
+
 .protile {
   border: 1px solid #ccc;
   height: 40px;
