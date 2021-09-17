@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router';
 import Nav from './Nav';
 
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 const Dashboard = () => {
 
     let history = useHistory();
@@ -23,6 +25,12 @@ const Dashboard = () => {
     return (
         <div className={styles.dashboard}>
             <Nav></Nav>
+            <Route path="/admin/dashboard/all">
+                <h1>all pros</h1>
+            </Route>
+            <Route path="/admin/dashboard/create">
+                <p>create</p>
+            </Route>
         </div>
      );
 }

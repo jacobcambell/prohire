@@ -1,34 +1,39 @@
 import Navbar from './components/Navbar';
 import ProList from './components/ProList';
 import ProDetails from './components/ProDetails';
-import Admin from './components/Admin';
+import AdminLogin from './components/AdminLogin';
 import Footer from './components/Footer';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Dashboard from './components/AdminDashboard/Dashboard';
+import AdminDashboard from './components/AdminDashboard/Dashboard';
+import AdminNav from './components/AdminDashboard/Nav';
 
 function App() {
+
+  let onAdminDashboard = false;
+
   return (
     <div className="App">
       <Router>
+
         <Switch>
-          <Route exact path="/admin/dashboard">
-            <Dashboard></Dashboard>
+          <Route path="/admin/dashboard">
+            <AdminDashboard></AdminDashboard>
           </Route>
 
-          <Route path="/">
+          <Route exact path="/">
             <Navbar></Navbar>
-
-            <Route exact path="/">
-              <ProList></ProList>
-            </Route>
-            <Route exact path="/professionals/:slug">
-              <ProDetails></ProDetails>
-            </Route>
-            <Route exact path="/admin">
-              <Admin></Admin>
-            </Route>
-
+            <ProList></ProList>
+            <Footer></Footer>
+          </Route>
+          <Route exact path="/professionals/:slug">
+            <Navbar></Navbar>
+            <ProDetails></ProDetails>
+            <Footer></Footer>
+          </Route>
+          <Route exact path="/admin">
+            <Navbar></Navbar>
+            <AdminLogin></AdminLogin>
             <Footer></Footer>
           </Route>
         </Switch>

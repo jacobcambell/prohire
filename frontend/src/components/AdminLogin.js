@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import styles from './css/Admin.module.css';
+import styles from './css/AdminLogin.module.css';
 
-const Admin = () => {
+const AdminLogin = () => {
 
     let history = useHistory();
 
@@ -54,4 +54,4 @@ const Admin = () => {
      );
 }
 
-export default Admin;
+export default AdminLogin;
