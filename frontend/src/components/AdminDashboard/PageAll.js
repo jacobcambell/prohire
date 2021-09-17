@@ -18,6 +18,7 @@ const PageAll = () => {
     return (
         <div className={styles.page}>
             <p className={styles.title}>All Professionals</p>
+            <Link to="/admin/dashboard/create" className={styles.addBtn}>+ Create Professional</Link>
 
             {
                 pros && pros.map((pro) => (

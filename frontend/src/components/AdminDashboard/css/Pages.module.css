@@ -11,6 +11,16 @@
   font-size: 20px;
 }
 
+.page .addBtn {
+  background: #579725;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  display: table;
+  margin: 5px 0 25px;
+}
+
 .protile {
   border: 1px solid #ccc;
   height: 40px;
