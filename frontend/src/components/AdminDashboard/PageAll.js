@@ -13,7 +13,17 @@ const PageAll = () => {
             .then(data => {
                 setPros(data);
             })
-    }, []);
+    });
+
+    const deletePro = (id) => {
+        fetch('http://localhost:8080/delete-professional', {
+            method: 'post',
+            body: JSON.stringify({
+                id: id
+            }),
+            headers: { "Content-type": "application/json; charset=UTF-8" }
+        });
+    }
 
     return (
         <div className={styles.page}>
@@ -36,7 +46,7 @@ const PageAll = () => {
                             <p className={styles.content}>{pro.profession}</p>
                         </div>
 
-                        <i class="fas fa-trash"></i>
+                        <i onClick={() => { deletePro(pro.id) }} className="fas fa-trash"></i>
                     </Link>
                 ))
             }
