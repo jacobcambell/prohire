@@ -21,6 +21,10 @@ const Dashboard = () => {
                 // User is not logged in as an admin, redirect to login component
                 history.push('/admin/');
             }
+            else{
+                // User is an admin, redirect to all professionals page
+                history.push('/admin/dashboard/all');
+            }
         })
     }, []);
 
