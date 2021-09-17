@@ -35,6 +35,8 @@ const PageAll = () => {
                             <p className={styles.header}>Profession</p>
                             <p className={styles.content}>{pro.profession}</p>
                         </div>
+
+                        <i class="fas fa-trash"></i>
                     </Link>
                 ))
             }

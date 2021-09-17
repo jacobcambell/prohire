@@ -61,4 +61,17 @@
   font-weight: bold;
   font-size: 14px;
 }
+
+.protile i {
+  height: 100%;
+  vertical-align: middle;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  padding: 0 15px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 20px;
+}
 /*# sourceMappingURL=Pages.module.css.map */
