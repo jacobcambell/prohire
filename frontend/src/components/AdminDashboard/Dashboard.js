@@ -4,6 +4,8 @@ import { useHistory } from 'react-router';
 import Nav from './Nav';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import PageAll from './PageAll';
+import PageCreate from './PageCreate';
 
 const Dashboard = () => {
 
@@ -26,10 +28,10 @@ const Dashboard = () => {
         <div className={styles.dashboard}>
             <Nav></Nav>
             <Route path="/admin/dashboard/all">
-                <h1>all pros</h1>
+                <PageAll></PageAll>
             </Route>
             <Route path="/admin/dashboard/create">
-                <p>create</p>
+                <PageCreate></PageCreate>
             </Route>
         </div>
      );

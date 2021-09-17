@@ -2,9 +2,7 @@
   width: 300px;
   background: #323544;
   height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
+  float: left;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }

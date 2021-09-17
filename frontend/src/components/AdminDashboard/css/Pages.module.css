@@ -1,0 +1,13 @@
+.page {
+  width: calc(100% - 300px);
+  height: 100%;
+  float: left;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px 25px;
+}
+
+.page .title {
+  font-size: 20px;
+}
+/*# sourceMappingURL=Pages.module.css.map */
