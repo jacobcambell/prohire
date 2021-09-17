@@ -1,5 +1,6 @@
 import styles from './css/Pages.module.css';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const PageAll = () => {
 
@@ -17,6 +18,25 @@ const PageAll = () => {
     return (
         <div className={styles.page}>
             <p className={styles.title}>All Professionals</p>
+
+            {
+                pros && pros.map((pro) => (
+                    <Link to="/admin/dashboard/all" key={pro.id} className={styles.protile}>
+                        <div className={styles.split}>
+                            <p className={styles.header}>Full Name</p>
+                            <p className={styles.content}>{pro.fullname}</p>
+                        </div>
+                        <div className={styles.split}>
+                            <p className={styles.header}>Location</p>
+                            <p className={styles.content}>{pro.location_from}</p>
+                        </div>
+                        <div className={styles.split}>
+                            <p className={styles.header}>Profession</p>
+                            <p className={styles.content}>{pro.profession}</p>
+                        </div>
+                    </Link>
+                ))
+            }
         </div>
     );
 }

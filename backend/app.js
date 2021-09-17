@@ -35,12 +35,12 @@ app.use(express.urlencoded());
 
 
 app.get('/getall', (req, res) => {
-    con.query('SELECT id, fullname, slug FROM professionals', (err, results) => {
+    con.query('SELECT id, fullname, location_from, profession, slug FROM professionals', (err, results) => {
         if (err) throw err;
         let professionals = [];
 
         results.map((pro) => {
-            professionals.push({id: pro.id, fullname: pro.fullname, slug: pro.slug});
+            professionals.push({id: pro.id, fullname: pro.fullname, location_from: pro.location_from, profession: pro.profession, slug: pro.slug});
         })
 
         res.json(professionals);

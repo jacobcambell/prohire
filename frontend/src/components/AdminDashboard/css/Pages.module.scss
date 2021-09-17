@@ -9,3 +9,27 @@
         font-size: 20px;
     }
 }
+
+.protile{
+    border: 1px solid #ccc;
+    height: 40px;
+    margin: 10px 0;
+    transition: 100ms all;
+    padding: 10px;
+    display: block;
+
+    &:hover{
+        background: #ddd;
+    }
+
+    .split{
+        float: left;
+        width: 15%;
+        height: 100%;
+
+        .header{
+            font-weight: bold;
+            font-size: 14px;
+        }
+    }
+}
