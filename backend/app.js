@@ -93,13 +93,6 @@ app.post('/adminlogin', (req, res) => {
 })
 
 app.post('/create-professional', (req, res) => {
-    // Parameters:
-    // fullname
-    // location_from
-    // profession
-    // bio
-    // slug
-
     let fullname = req.body.fullname;
     let location_from = req.body.location_from;
     let profession = req.body.profession;
@@ -126,6 +119,22 @@ app.post('/create-professional', (req, res) => {
             res.json({ message: 'Created professional', success: true });
         });
 })
+
+app.post('/delete-professional', (req, res) => {
+    let id = req.body.id;
+
+    if(typeof id === 'undefined'){
+        res.sendStatus(400);
+        return;
+    }
+
+    // Delete from database
+    con.query('DELETE FROM professionals WHERE id=?', [id], (err, results) => {
+        if (err) throw err;
+
+        res.json({message: "Deleted professional", success: true});
+    });
+});
 
 app.get('/adminloggedin', (req, res) => {
     // Is the user logged in as an admin?
