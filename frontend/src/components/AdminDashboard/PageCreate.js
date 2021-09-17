@@ -1,7 +1,10 @@
 import styles from './css/Pages.module.css';
 import { useState } from 'react';
+import { useHistory } from 'react-router';
 
 const PageCreate = () => {
+
+    let history = useHistory();
 
     const [fullName, setFullName] = useState();
     const [location, setLocation] = useState();
@@ -10,7 +13,21 @@ const PageCreate = () => {
     const [slug, setSlug] = useState();
 
     const handleForm = () => {
-
+        fetch('http://localhost:8080/create-professional', {
+            method: 'post',
+            body: JSON.stringify({
+                fullname: fullName,
+                location_from: location,
+                profession: profession,
+                bio: bio,
+                slug: slug
+            }),
+            headers: { "Content-type": "application/json; charset=UTF-8" }
+        })
+            .then(result => result.json())
+            .then((data) => {
+                history.push('/admin/dashboard/all');
+            })
     }
 
     return (
@@ -35,7 +52,7 @@ const PageCreate = () => {
             <button onClick={handleForm} className={styles.addBtn}>Create</button>
 
         </div>
-     );
+    );
 }
 
 export default PageCreate;
