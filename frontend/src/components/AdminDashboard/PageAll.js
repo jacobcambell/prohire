@@ -7,13 +7,16 @@ const PageAll = () => {
     const [pros, setPros] = useState();
 
     useEffect(() => {
-        // Get all professionals
+        getPros();
+    }, []);
+
+    const getPros = () => {
         fetch('http://localhost:8080/getall')
             .then(result => result.json())
             .then(data => {
                 setPros(data);
             })
-    });
+    }
 
     const deletePro = (id) => {
         fetch('http://localhost:8080/delete-professional', {
@@ -22,7 +25,10 @@ const PageAll = () => {
                 id: id
             }),
             headers: { "Content-type": "application/json; charset=UTF-8" }
-        });
+        })
+        .then(() => {
+            getPros();
+        })
     }
 
     return (

@@ -4,16 +4,16 @@ import { useParams } from 'react-router-dom';
 
 const PageEdit = () => {
 
-    const [fullName, setFullName] = useState();
-    const [location, setLocation] = useState();
-    const [profession, setProfession] = useState();
-    const [bio, setBio] = useState();
-    const [slug, setSlug] = useState();
+    const [fullName, setFullName] = useState('');
+    const [location, setLocation] = useState('');
+    const [profession, setProfession] = useState('');
+    const [bio, setBio] = useState('');
+    const [slug, setSlug] = useState('');
 
     const { id } = useParams();
 
     const handleForm = () => {
-        alert(id);
+
     }
 
     useEffect(() => {
@@ -26,7 +26,6 @@ const PageEdit = () => {
         })
             .then(result => result.json())
             .then((data) => {
-                console.log(data)
                 setFullName(data.fullname);
                 setLocation(data.location_from);
                 setProfession(data.profession);
