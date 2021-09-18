@@ -58,6 +58,22 @@ app.get('/prodetails', (req, res) => {
     })
 })
 
+app.post('/prodetailsbyid', (req, res) => {
+    // Load data for a specific professional by their id
+    let id = req.body.id;
+
+    if(typeof id === 'undefined'){
+        res.sendStatus(400);
+        return;
+    }
+
+    con.query('SELECT fullname, location_from, profession, bio, slug FROM professionals WHERE id=?', [id], (err, results) => {
+        if (err) throw err;
+
+        res.json(results[0]);
+    })
+})
+
 app.post('/adminlogin', (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
