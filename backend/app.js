@@ -146,6 +146,15 @@ app.get('/adminloggedin', (req, res) => {
     }
 })
 
+app.get('/logout', (req, res) => {
+    if(req.session.admin_logged_in){
+        req.session.destroy();
+        res.json({message: 'Logged out', success: true});
+        return;
+    }
+
+    res.sendStatus(400);
+})
 app.listen(8080, () => {
     console.log('ProHire API running on port 8080')
 });
