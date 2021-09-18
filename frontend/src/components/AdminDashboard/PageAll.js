@@ -32,7 +32,7 @@ const PageAll = () => {
 
             {
                 pros && pros.map((pro) => (
-                    <Link to="/admin/dashboard/all" key={pro.id} className={styles.protile}>
+                    <div key={pro.id} className={styles.protile}>
                         <div className={styles.split}>
                             <p className={styles.header}>Full Name</p>
                             <p className={styles.content}>{pro.fullname}</p>
@@ -45,9 +45,12 @@ const PageAll = () => {
                             <p className={styles.header}>Profession</p>
                             <p className={styles.content}>{pro.profession}</p>
                         </div>
+                        <div className={styles.split}>
+                            <Link to={`/admin/dashboard/edit/${pro.id}`} className={styles.edit}>Edit</Link>
+                        </div>
 
                         <i onClick={() => { deletePro(pro.id) }} className="fas fa-trash"></i>
-                    </Link>
+                    </div>
                 ))
             }
         </div>

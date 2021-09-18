@@ -6,6 +6,7 @@ import Nav from './Nav';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PageAll from './PageAll';
 import PageCreate from './PageCreate';
+import PageEdit from './PageEdit';
 
 const Dashboard = () => {
 
@@ -36,6 +37,9 @@ const Dashboard = () => {
             </Route>
             <Route path="/admin/dashboard/create">
                 <PageCreate></PageCreate>
+            </Route>
+            <Route path="/admin/dashboard/edit/:id">
+                <PageEdit></PageEdit>
             </Route>
         </div>
      );

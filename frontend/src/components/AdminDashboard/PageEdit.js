@@ -1,10 +1,8 @@
 import styles from './css/Pages.module.css';
 import { useState } from 'react';
-import { useHistory } from 'react-router';
+import { useParams } from 'react-router-dom';
 
-const PageCreate = () => {
-
-    let history = useHistory();
+const PageEdit = () => {
 
     const [fullName, setFullName] = useState();
     const [location, setLocation] = useState();
@@ -12,27 +10,15 @@ const PageCreate = () => {
     const [bio, setBio] = useState();
     const [slug, setSlug] = useState();
 
+    const { id } = useParams();
+
     const handleForm = () => {
-        fetch('http://localhost:8080/create-professional', {
-            method: 'post',
-            body: JSON.stringify({
-                fullname: fullName,
-                location_from: location,
-                profession: profession,
-                bio: bio,
-                slug: slug
-            }),
-            headers: { "Content-type": "application/json; charset=UTF-8" }
-        })
-            .then(result => result.json())
-            .then((data) => {
-                history.push('/admin/dashboard/all');
-            })
+        alert(id);
     }
 
     return (
         <div className={styles.page}>
-            <p className={styles.title}>Create Professional</p>
+            <p className={styles.title}>Editing Professional</p>
 
             <p className={styles.label}>Full Name</p>
             <input onChange={(e) => { setFullName(e.target.value) }} type="text" className={styles.field} />
@@ -49,9 +35,9 @@ const PageCreate = () => {
             <p className={styles.label}>Slug</p>
             <input onChange={(e) => { setSlug(e.target.value) }} type="text" className={styles.field} />
 
-            <button onClick={handleForm} className={styles.addBtn}>Create</button>
+            <button onClick={handleForm} className={styles.addBtn}>Confirm Changes</button>
         </div>
-    );
+     );
 }
 
-export default PageCreate;
+export default PageEdit;
