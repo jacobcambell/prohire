@@ -21,6 +21,9 @@
         display: block;
         padding: 10px 15px;
         transition: 150ms all;
+        cursor: pointer;
+        box-sizing: border-box;
+        width: 100%;
 
         i{
             font-size: 20px;
@@ -30,5 +33,11 @@
 
     .tab:hover{
         background: #1E202C;
+    }
+
+    .logout{
+        position: absolute;
+        bottom: 0;
+        left: 0;
     }
 }
