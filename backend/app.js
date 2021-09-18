@@ -109,6 +109,11 @@ app.post('/adminlogin', (req, res) => {
 })
 
 app.post('/create-professional', (req, res) => {
+    if (!req.session.admin_logged_in) {
+        res.sendStatus(400);
+        return;
+    }
+
     let fullname = req.body.fullname;
     let location_from = req.body.location_from;
     let profession = req.body.profession;
@@ -137,6 +142,11 @@ app.post('/create-professional', (req, res) => {
 })
 
 app.post('/delete-professional', (req, res) => {
+    if (!req.session.admin_logged_in) {
+        res.sendStatus(400);
+        return;
+    }
+
     let id = req.body.id;
 
     if(typeof id === 'undefined'){
