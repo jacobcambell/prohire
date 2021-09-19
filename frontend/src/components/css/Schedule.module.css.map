@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAA;EACL,KAAK,EAAE,MAAM;EACb,MAAM,EAAE,SAAS;EACjB,KAAK,EAAE,KAAK;CACf",
+    "sources": [
+        "Schedule.module.scss"
+    ],
+    "names": [],
+    "file": "Schedule.module.css"
+}

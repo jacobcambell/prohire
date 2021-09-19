@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AdminDashboard from './components/AdminDashboard/Dashboard';
 import AdminNav from './components/AdminDashboard/Nav';
+import Schedule from './components/Schedule';
 
 function App() {
 
@@ -34,6 +35,11 @@ function App() {
           <Route exact path="/admin">
             <Navbar></Navbar>
             <AdminLogin></AdminLogin>
+            <Footer></Footer>
+          </Route>
+          <Route exact path="/schedule/:id">
+            <Navbar></Navbar>
+            <Schedule></Schedule>
             <Footer></Footer>
           </Route>
         </Switch>
