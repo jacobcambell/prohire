@@ -1,6 +1,6 @@
 import styles from './css/Pages.module.css';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 const PageEdit = () => {
 
@@ -12,9 +12,7 @@ const PageEdit = () => {
 
     const { id } = useParams();
 
-    const handleForm = () => {
-
-    }
+    let history = useHistory();
 
     useEffect(() => {
         fetch('http://localhost:8080/prodetailsbyid', {
@@ -33,6 +31,27 @@ const PageEdit = () => {
                 setSlug(data.slug);
             })
     }, []);
+
+    // Fetch to edit-professionals
+    const handleForm = () => {
+        fetch('http://localhost:8080/edit-professional', {
+            method: 'post',
+            body: JSON.stringify({
+                fullname: fullName,
+                location_from: location,
+                profession: profession,
+                bio: bio,
+                slug: slug,
+                id: id
+            }),
+            headers: { "Content-type": "application/json; charset=UTF-8" },
+            credentials: 'include'
+        })
+            .then(result => result.json())
+            .then((data) => {
+                history.push('/admin/dashboard/all');
+            })
+    }
 
     return (
         <div className={styles.page}>
