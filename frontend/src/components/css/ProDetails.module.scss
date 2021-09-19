@@ -7,12 +7,12 @@
         margin: auto;
 
         .name{
-            font-size: 22px;
+            font-size: 18px;
             color: white;
+            font-weight: bold;
         }
 
         .profession{
-            font-size: 18px;
             color: white;
         }
 
@@ -26,7 +26,6 @@
             border: 1px solid #eebd22;
             padding: 5px 10px;
             border-radius: 5px;
-            font-size: 20px;
             cursor: pointer;
         }
     }
@@ -40,13 +39,12 @@
 
         .title{
             color: #f26d7d;
-            font-size: 22px;
+            font-size: 18px;
         }
 
         .bioContent{
             color: white;
             padding: 10px 0;
-            font-size: 18px;
             font-weight: lighter;
         }
     }

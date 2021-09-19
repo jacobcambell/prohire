@@ -17,10 +17,11 @@
 
 .footer .center .section .title {
   color: #959595;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .footer .center .section .link {
+  font-size: 14px;
   color: white;
   display: table;
   margin: 5px 0;

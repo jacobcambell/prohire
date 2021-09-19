@@ -7,10 +7,11 @@ import styles from './css/ProDetails.module.css';
 const ProDetails = () => {
     const {slug} = useParams();
 
-    const [name, setName] = useState();
-    const [profession, setProfession] = useState();
-    const [location, setLocation] = useState();
-    const [bio, setBio] = useState();
+    const [name, setName] = useState('');
+    const [profession, setProfession] = useState('');
+    const [location, setLocation] = useState('');
+    const [bio, setBio] = useState('');
+    const [id, setId] = useState('');
 
     const [images, setImages] = useState();
 
@@ -31,6 +32,7 @@ const ProDetails = () => {
             setProfession(data.profession);
             setLocation(data.location_from);
             setBio(data.bio);
+            setId(data.id);
         })
     }, [])
 
@@ -40,7 +42,7 @@ const ProDetails = () => {
             <div className={styles.inforow}>
                 <p className={styles.name}>{name}</p>
                 <p className={styles.profession}>{profession} from {location}</p>
-                <Link to="/schedule" className={styles.scheduleBtn}>Schedule Now</Link>
+                <Link to={`/schedule/${id}`} className={styles.scheduleBtn}>Schedule Now</Link>
             </div>
 
             <Gallery images={images}></Gallery>

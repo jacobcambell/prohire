@@ -51,7 +51,7 @@ app.get('/prodetails', (req, res) => {
     // Load data for a specific professional
     let slug = req.query.slug;
 
-    con.query('SELECT fullname, location_from, profession, bio FROM professionals WHERE slug=?', [slug], (err, results) => {
+    con.query('SELECT id, fullname, location_from, profession, bio FROM professionals WHERE slug=?', [slug], (err, results) => {
         if (err) throw err;
 
         res.json(results[0]);
