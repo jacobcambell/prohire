@@ -62,7 +62,7 @@ app.post('/prodetailsbyid', (req, res) => {
     // Load data for a specific professional by their id
     let id = req.body.id;
 
-    if(typeof id === 'undefined'){
+    if (typeof id === 'undefined') {
         res.sendStatus(400);
         return;
     }
@@ -141,6 +141,48 @@ app.post('/create-professional', (req, res) => {
         });
 })
 
+app.post('/edit-professional', (req, res) => {
+    if (!req.session.admin_logged_in) {
+        res.sendStatus(400);
+        return;
+    }
+
+    let id = req.body.id;
+    let fullname = req.body.fullname;
+    let location_from = req.body.location_from;
+    let profession = req.body.profession;
+    let bio = req.body.bio;
+    let slug = req.body.slug;
+
+    if (
+        typeof id === 'undefined' ||
+        typeof fullname === 'undefined' ||
+        typeof location_from === 'undefined' ||
+        typeof profession === 'undefined' ||
+        typeof bio === 'undefined' ||
+        typeof slug === 'undefined'
+    ) {
+        res.sendStatus(400);
+        return;
+    }
+
+    // Update based on id of professional
+    con.query(`UPDATE professionals
+                SET fullname=?,
+                location_from=?,
+                profession=?,
+                bio=?,
+                slug=?
+                WHERE
+                id=?`,
+        [fullname, location_from, profession, bio, slug, id],
+        (err, results) => {
+            if (err) throw err;
+
+            res.json({ message: 'Updated professional', success: true });
+        });
+})
+
 app.post('/delete-professional', (req, res) => {
     if (!req.session.admin_logged_in) {
         res.sendStatus(400);
@@ -149,7 +191,7 @@ app.post('/delete-professional', (req, res) => {
 
     let id = req.body.id;
 
-    if(typeof id === 'undefined'){
+    if (typeof id === 'undefined') {
         res.sendStatus(400);
         return;
     }
@@ -158,7 +200,7 @@ app.post('/delete-professional', (req, res) => {
     con.query('DELETE FROM professionals WHERE id=?', [id], (err, results) => {
         if (err) throw err;
 
-        res.json({message: "Deleted professional", success: true});
+        res.json({ message: "Deleted professional", success: true });
     });
 });
 
@@ -173,9 +215,9 @@ app.get('/adminloggedin', (req, res) => {
 })
 
 app.get('/logout', (req, res) => {
-    if(req.session.admin_logged_in){
+    if (req.session.admin_logged_in) {
         req.session.destroy();
-        res.json({message: 'Logged out', success: true});
+        res.json({ message: 'Logged out', success: true });
         return;
     }
 
