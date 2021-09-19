@@ -24,7 +24,8 @@ const PageAll = () => {
             body: JSON.stringify({
                 id: id
             }),
-            headers: { "Content-type": "application/json; charset=UTF-8" }
+            headers: { "Content-type": "application/json; charset=UTF-8" },
+            credentials: 'include'
         })
         .then(() => {
             getPros();
