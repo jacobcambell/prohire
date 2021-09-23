@@ -35,6 +35,7 @@ app.use(express.urlencoded());
 
 
 app.get('/getall', (req, res) => {
+    // Get a list of all the professionals, with no filtering
     con.query('SELECT id, fullname, location_from, profession, slug FROM professionals', (err, results) => {
         if (err) throw err;
         let professionals = [];
@@ -75,6 +76,7 @@ app.post('/prodetailsbyid', (req, res) => {
 })
 
 app.post('/adminlogin', (req, res) => {
+    // Admin login handler
     let username = req.body.username;
     let password = req.body.password;
 
@@ -109,6 +111,7 @@ app.post('/adminlogin', (req, res) => {
 })
 
 app.post('/create-professional', (req, res) => {
+    // Create professional handler, only an admin should be able to do this
     if (!req.session.admin_logged_in) {
         res.sendStatus(400);
         return;
@@ -142,6 +145,7 @@ app.post('/create-professional', (req, res) => {
 })
 
 app.post('/edit-professional', (req, res) => {
+    // Update a professional's information based off their id
     if (!req.session.admin_logged_in) {
         res.sendStatus(400);
         return;
@@ -184,6 +188,7 @@ app.post('/edit-professional', (req, res) => {
 })
 
 app.post('/delete-professional', (req, res) => {
+    // Deletes a professional based off their id
     if (!req.session.admin_logged_in) {
         res.sendStatus(400);
         return;
@@ -215,6 +220,7 @@ app.get('/adminloggedin', (req, res) => {
 })
 
 app.get('/logout', (req, res) => {
+    // Destroy the user's session and essentially "logout"
     if (req.session.admin_logged_in) {
         req.session.destroy();
         res.json({ message: 'Logged out', success: true });
@@ -223,6 +229,7 @@ app.get('/logout', (req, res) => {
 
     res.sendStatus(400);
 })
+
 app.listen(8080, () => {
     console.log('ProHire API running on port 8080')
 });
