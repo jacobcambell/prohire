@@ -23,7 +23,8 @@ const PageCreate = () => {
                 bio: bio,
                 slug: slug
             }),
-            headers: { "Content-type": "application/json; charset=UTF-8" }
+            headers: { "Content-type": "application/json; charset=UTF-8" },
+            credentials: 'include'
         })
             .then(result => result.json())
             .then((data) => {
