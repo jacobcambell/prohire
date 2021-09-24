@@ -11,8 +11,6 @@ import Schedule from './components/Schedule';
 
 function App() {
 
-  let onAdminDashboard = false;
-
   return (
     <div className="App">
       <Router>
