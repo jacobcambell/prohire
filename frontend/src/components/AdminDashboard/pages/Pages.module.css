@@ -13,6 +13,11 @@
   padding-bottom: 15px;
 }
 
+.page .file {
+  display: block;
+  margin: 0 0 15px;
+}
+
 .page .addBtn {
   background: #579725;
   border: none;

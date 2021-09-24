@@ -31,7 +31,6 @@ const PageManageImages = () => {
     // Update files array in state every time the user changes the html input form
     const onFileChange = (e) => {
         let newFiles = [];
-        // setFile(e.target.files[0]);
 
         // For all the files in the html form, add them to the array
         for (let i = 0; i < e.target.files.length; i++) {
@@ -45,6 +44,11 @@ const PageManageImages = () => {
     const handleFormSubmit = () => {
         // Create a new (empty) FormData object
         const formData = new FormData();
+
+        // User does not have any images in the store
+        if (files.length === 0) {
+            return;
+        }
 
         // Append each image to the formData object
         for (let i = 0; i < files.length; i++) {
@@ -66,8 +70,8 @@ const PageManageImages = () => {
     return (
         <div className={styles.page}>
             <p className={styles.title}>Managing Images for {proname}:</p>
-            <input onChange={onFileChange} type="file" name="avatar" multiple="multiple"></input>
-            <button onClick={handleFormSubmit}>Submit</button>
+            <input className={styles.file} onChange={onFileChange} type="file" multiple="multiple"></input>
+            <button className={styles.addBtn} onClick={handleFormSubmit}>Upload Images</button>
         </div>
     );
 }
