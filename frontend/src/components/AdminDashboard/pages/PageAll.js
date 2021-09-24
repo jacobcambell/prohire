@@ -54,10 +54,10 @@ const PageAll = () => {
                             <p className={styles.content}>{pro.profession}</p>
                         </div>
                         <div className={styles.split}>
-                            <Link to={`/admin/dashboard/edit/${pro.id}`} className={`${styles.link} ${styles.edit}`}><i class="fas fa-edit"></i>Edit User</Link>
+                            <Link to={`/admin/dashboard/edit/${pro.id}`} className={`${styles.link} ${styles.edit}`}><i className="fas fa-edit"></i>Edit User</Link>
                         </div>
                         <div className={styles.split}>
-                            <Link to={`/admin/dashboard/manage-images/${pro.id}`} className={`${styles.link} ${styles.images}`}><i class="fas fa-images"></i>Manage Images</Link>
+                            <Link to={`/admin/dashboard/manage-images/${pro.id}`} className={`${styles.link} ${styles.images}`}><i className="fas fa-images"></i>Manage Images</Link>
                         </div>
                         <div className={styles.split} onClick={() => { deletePro(pro.id) }}>
                             <p className={`${styles.link} ${styles.trash}`}><i className={`fas fa-trash`}></i> Delete</p>
