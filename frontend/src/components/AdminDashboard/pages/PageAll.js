@@ -1,6 +1,7 @@
-import styles from './css/Pages.module.css';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import styles from './Pages.module.css';
 
 const PageAll = () => {
 

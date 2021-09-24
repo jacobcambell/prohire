@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom';
-import styles from './css/Nav.module.css';
-import { useHistory } from 'react-router';
+import { Link, useHistory } from 'react-router-dom';
+import styles from './Nav.module.css';
 
 const Nav = () => {
 

@@ -1,12 +1,13 @@
-import styles from './css/Dashboard.module.css';
 import { useEffect } from 'react';
-import { useHistory } from 'react-router';
-import Nav from './Nav';
-
+import { useHistory } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import PageAll from './PageAll';
-import PageCreate from './PageCreate';
-import PageEdit from './PageEdit';
+
+import Nav from './Nav';
+import PageAll from './pages/PageAll';
+import PageCreate from './pages/PageCreate';
+import PageEdit from './pages/PageEdit';
+
+import styles from './Dashboard.module.css';
 
 const Dashboard = () => {
 

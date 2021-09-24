@@ -1,6 +1,7 @@
-import styles from './css/Pages.module.css';
 import { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+
+import styles from './Pages.module.css';
 
 const PageEdit = () => {
 

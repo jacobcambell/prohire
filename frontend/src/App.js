@@ -1,12 +1,11 @@
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import Navbar from './components/Navbar';
 import ProList from './components/ProList';
 import ProDetails from './components/ProDetails';
 import AdminLogin from './components/AdminLogin';
 import Footer from './components/Footer';
-
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import AdminDashboard from './components/AdminDashboard/Dashboard';
-import AdminNav from './components/AdminDashboard/Nav';
+import AdminDashboard from './components/AdminDashboard';
 import Schedule from './components/Schedule';
 
 function App() {

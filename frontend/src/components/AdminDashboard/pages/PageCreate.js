@@ -1,6 +1,7 @@
-import styles from './css/Pages.module.css';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
+
+import styles from './Pages.module.css';
 
 const PageCreate = () => {
 
