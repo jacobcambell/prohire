@@ -1,10 +1,12 @@
 require('dotenv').config();
 
 const express = require('express')
-const app = express();
 const cors = require('cors');
 const mysql = require('mysql');
 const session = require('express-session');
+const multer = require('multer');
+
+const app = express();
 
 const con = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -33,6 +35,45 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded());
 
+const upload = multer({
+    dest: 'images/'
+});
+
+// Routes
+
+app.post('/admin-image-upload', upload.array('images'), (req, res) => {
+    // Multer saves images the user sends via multipart/form-data
+    // Then we loop through those images and save the filename to the database
+    // Note - currently we just assume the files sent are .jpeg, which obviously we need to check file types/sizes/etc
+    // Params:
+    // images - an array of files sent via FormData on frontend
+    // proid - The ID of the pro the admin is trying to upload images for
+
+    if (!req.session.admin_logged_in) {
+        res.sendStatus(400);
+        return;
+    }
+
+    if (
+        typeof req.body.proid === 'undefined' ||
+        typeof req.files === 'undefined'
+    ) {
+        res.sendStatus(400);
+        return;
+    }
+
+    // Loop through all the images sent by the user
+    for (let i = 0; i < req.files.length; i++) {
+        // Add image name to database
+        // Note - Currently we are just appending .jpeg to the end
+        const thisImage = req.files[i].filename + '.jpeg';
+        con.query('INSERT INTO professional_images (pro_id, image_name) VALUES (?, ?)', [req.body.proid, thisImage], (err, results) => {
+            if (err) throw err;
+        });
+    }
+
+    res.sendStatus(200);
+});
 
 app.get('/getall', (req, res) => {
     // Get a list of all the professionals, with no filtering
