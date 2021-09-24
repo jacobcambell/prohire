@@ -28,9 +28,9 @@ const PageAll = () => {
             headers: { "Content-type": "application/json; charset=UTF-8" },
             credentials: 'include'
         })
-        .then(() => {
-            getPros();
-        })
+            .then(() => {
+                getPros();
+            })
     }
 
     return (
@@ -54,10 +54,14 @@ const PageAll = () => {
                             <p className={styles.content}>{pro.profession}</p>
                         </div>
                         <div className={styles.split}>
-                            <Link to={`/admin/dashboard/edit/${pro.id}`} className={styles.edit}>Edit</Link>
+                            <Link to={`/admin/dashboard/edit/${pro.id}`} className={`${styles.link} ${styles.edit}`}><i class="fas fa-edit"></i>Edit User</Link>
                         </div>
-
-                        <i onClick={() => { deletePro(pro.id) }} className="fas fa-trash"></i>
+                        <div className={styles.split}>
+                            <Link to={`/admin/dashboard/manage-images/${pro.id}`} className={`${styles.link} ${styles.images}`}><i class="fas fa-images"></i>Manage Images</Link>
+                        </div>
+                        <div className={styles.split} onClick={() => { deletePro(pro.id) }}>
+                            <p className={`${styles.link} ${styles.trash}`}><i className={`fas fa-trash`}></i> Delete</p>
+                        </div>
                     </div>
                 ))
             }
