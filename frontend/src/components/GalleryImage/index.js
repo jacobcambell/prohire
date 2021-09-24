@@ -1,4 +1,4 @@
-import styles from './css/GalleryImage.module.css';
+import styles from './GalleryImage.module.css';
 
 const GalleryImage = ({image}) => {
     return (

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import styles from './css/AdminLogin.module.css';
+import styles from './AdminLogin.module.css';
 
 const AdminLogin = () => {
 

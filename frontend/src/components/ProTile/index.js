@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import styles from './css/ProTile.module.css';
+import styles from './ProTile.module.css';
 
 const ProTile = ({fullname, slug, image}) => {
     return (

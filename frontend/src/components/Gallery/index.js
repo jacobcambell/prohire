@@ -1,5 +1,5 @@
-import GalleryImage from "./GalleryImage";
-import styles from './css/Gallery.module.css';
+import GalleryImage from "../GalleryImage";
+import styles from './Gallery.module.css';
 
 const Gallery = ({images}) => {
 

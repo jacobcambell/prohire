@@ -1,5 +1,5 @@
-import styles from './css/Schedule.module.css';
 import { useParams } from 'react-router-dom';
+import styles from './Schedule.module.css';
 
 const Schedule = () => {
 

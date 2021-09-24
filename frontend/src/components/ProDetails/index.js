@@ -1,8 +1,8 @@
 import { useParams } from "react-router";
-import Gallery from "./Gallery";
+import Gallery from "../Gallery";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import styles from './css/ProDetails.module.css';
+import styles from './ProDetails.module.css';
 
 const ProDetails = () => {
     const {slug} = useParams();

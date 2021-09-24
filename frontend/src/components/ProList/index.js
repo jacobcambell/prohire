@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import ProTile from "./ProTile";
-import styles from './css/ProList.module.css';
+import ProTile from "../ProTile";
+import styles from './ProList.module.css';
 
 const ProList = () => {
     // Get a list of all the professionals slugs and images
