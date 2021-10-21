@@ -9,9 +9,9 @@ const multer = require('multer');
 const app = express();
 
 const con = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+    host: process.env.MYSQL_DB_HOST,
+    user: process.env.MYSQL_DB_USER,
+    password: process.env.MYSQL_DB_PASSWORD,
     database: 'prohire'
 });
 
@@ -33,7 +33,6 @@ app.use(session({
 }));
 
 app.use(express.json());
-app.use(express.urlencoded());
 
 const upload = multer({
     dest: 'images/'
@@ -75,7 +74,7 @@ app.post('/admin-image-upload', upload.array('images'), (req, res) => {
     res.sendStatus(200);
 });
 
-app.get('/getall', (req, res) => {
+app.post('/get-all-pros', (req, res) => {
     // Get a list of all the professionals, with no filtering
     con.query('SELECT id, fullname, location_from, profession, slug FROM professionals', (err, results) => {
         if (err) throw err;

@@ -1,9 +1,9 @@
 .protile {
-  width: 250px;
-  height: 250px;
-  display: inline-block;
-  vertical-align: top;
+  width: 200px;
+  height: 200px;
   margin: 25px;
+  position: relative;
+  display: block;
 }
 
 .protile .name {

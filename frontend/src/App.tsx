@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Navbar from './components/Navbar';
-import ProList from './components/ProList';
-import ProDetails from './components/ProDetails';
-import AdminLogin from './components/AdminLogin';
-import Footer from './components/Footer';
-import AdminDashboard from './components/AdminDashboard';
+import ProDetails from './pages/ProDetails/ProDetails';
+import AdminLogin from './pages/AdminLogin/AdminLogin';
+import Footer from './components/Footer/Footer';
+import AdminDashboard from './pages/AdminDashboard';
 import Schedule from './components/Schedule';
+
+import Home from './pages/Home/Home';
 
 function App() {
 
@@ -20,22 +20,17 @@ function App() {
           </Route>
 
           <Route exact path="/">
-            <Navbar></Navbar>
-            <ProList></ProList>
-            <Footer></Footer>
+            <Home></Home>
           </Route>
           <Route exact path="/professionals/:slug">
-            <Navbar></Navbar>
             <ProDetails></ProDetails>
             <Footer></Footer>
           </Route>
           <Route exact path="/admin">
-            <Navbar></Navbar>
             <AdminLogin></AdminLogin>
             <Footer></Footer>
           </Route>
           <Route exact path="/schedule/:id">
-            <Navbar></Navbar>
             <Schedule></Schedule>
             <Footer></Footer>
           </Route>
