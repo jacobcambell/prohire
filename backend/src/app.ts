@@ -116,38 +116,22 @@ app.post('/prodetailsbyid', (req: Express.Request, res: Express.Response) => {
 })
 
 app.post('/adminlogin', (req: Express.Request, res: Express.Response) => {
-    // Admin login handler
-    let username = req.body.username;
-    let password = req.body.password;
+    const check = [
+        req.body.password
+    ];
 
-    // Grab the user's password
-    con.query('SELECT password FROM admins WHERE username=?', [username], (err, results) => {
-        if (err) throw err;
+    if (check.includes(undefined) || check.includes(null)) {
+        res.sendStatus(400)
+        return;
+    }
 
-        if (results.length == 0) {
-            // No user with that username found
-            res.json({ message: 'No user with that username found!' });
-            return;
-        }
-        else {
-            // Check if passwords match
-            if (results[0].password == password) {
-                // Good match
-                // Note - There was an initial bug I had on this line, when setting session variables you have to set
-                // them BEFORE returning data to client (like with res.json()) I initially was setting session variables after the
-                // res.json() line and the browser was not setting cookies, likely because the data was already returned with res.json()
-                // before I had a chance to send the cookie with it
-                req.session.admin_logged_in = true;
-                res.json({ message: 'Successful login', success: true })
-                return;
-            }
-            else {
-                // Passwords don't match
-                res.json({ message: 'Incorrect password!' });
-                return;
-            }
-        }
-    });
+    // Admin password is stored in .env ADMIN_PASSWORD
+    if (req.body.password === process.env.ADMIN_PASSWORD) {
+        res.json({ error: false })
+    }
+    else {
+        res.json({ error: true })
+    }
 })
 
 app.post('/create-professional', (req: Express.Request, res: Express.Response) => {
