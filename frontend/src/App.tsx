@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ProDetails from './pages/ProDetails/ProDetails';
 import AdminLogin from './pages/AdminLogin/AdminLogin';
 import Footer from './components/MainFooter/Footer';
-import AdminDashboard from './pages/AdminDashboard';
+import AdminDashboard from './pages/AdminDashboard/AdminDashboard';
 import Schedule from './components/Schedule';
 
 import Home from './pages/Home/Home';

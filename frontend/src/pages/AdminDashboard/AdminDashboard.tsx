@@ -15,16 +15,7 @@ const Dashboard = () => {
     let history = useHistory();
 
     useEffect(() => {
-        fetch('http://localhost:8080/adminloggedin', {
-            credentials: 'include'
-        })
-        .then(result => result.json())
-        .then((data) => {
-            if(!data.admin_logged_in){
-                // User is not logged in as an admin, redirect to login component
-                history.push('/admin/');
-            }
-        })
+        // Check if user is logged in as admin
     }, []);
 
     return (
@@ -43,7 +34,7 @@ const Dashboard = () => {
                 <PageManageImages></PageManageImages>
             </Route>
         </div>
-     );
+    );
 }
 
 export default Dashboard;
