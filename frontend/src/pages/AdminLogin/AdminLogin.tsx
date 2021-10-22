@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import axios from "axios";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styles from './AdminLogin.module.css';
 
@@ -6,50 +7,37 @@ const AdminLogin = () => {
 
     let history = useHistory();
 
-    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
-        fetch('http://localhost:8080/adminlogin', {
-            method: 'post',
-            body: JSON.stringify({ username, password }),
-            headers: { "Content-type": "application/json; charset=UTF-8" },
-            credentials: 'include'
+        interface AdminLoginResults {
+            error: boolean;
+        }
+
+        axios.post<AdminLoginResults>(`${process.env.REACT_APP_API_ENDPOINT}/adminlogin`, {
+            password
         })
-            .then(result => result.json())
-            .then((data) => {
-                if (data.success) {
-                    // Server says we have successfully logged in
-                    history.push('/admin/dashboard');
+            .then((res) => {
+                if (!res.data.error) {
+                    // No error, so we will assume the password we sent was correct
+                    localStorage.setItem('admin_password', password);
                 }
                 else {
-                    // Login failed, show error here
+                    alert('Invalid password')
                 }
             })
     }
 
-    useEffect(() => {
-        fetch('http://localhost:8080/adminloggedin', {
-            credentials: 'include'
-        })
-            .then(result => result.json())
-            .then((data) => {
-                if (data.admin_logged_in) {
-                    // User is already logged in as an admin
-                    history.push('/admin/dashboard');
-                }
-            })
-    }, [])
-
     return (
-        <div className={styles.admin}>
-            <p className={styles.label}>Username</p>
-            <input type="text" onChange={(e) => { setUsername(e.target.value) }} className={styles.field} />
+        <div className="bg-dark text-white p-3">
+            <div className="container">
+                <p className="fs-3">Admin</p>
 
-            <p className={styles.label}>Password</p>
-            <input type="password" onChange={(e) => { setPassword(e.target.value) }} className={styles.field} />
+                <p className="mb-1">Password</p>
+                <input type="password" onChange={(e) => { setPassword(e.target.value) }} className="form-control" />
 
-            <button onClick={handleLogin} className={styles.submit}>Login</button>
+                <button onClick={handleLogin} className="btn btn-primary my-3">Login</button>
+            </div>
         </div>
     );
 }

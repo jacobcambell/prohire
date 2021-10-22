@@ -28,7 +28,6 @@ function App() {
           </Route>
           <Route exact path="/admin">
             <AdminLogin></AdminLogin>
-            <Footer></Footer>
           </Route>
           <Route exact path="/schedule/:id">
             <Schedule></Schedule>
