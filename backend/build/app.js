@@ -1,29 +1,28 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
-
-const express = require('express')
+const express_1 = __importDefault(require("express"));
 const cors = require('cors');
 const mysql = require('mysql');
 const session = require('express-session');
 const multer = require('multer');
-
-const app = express();
-
+const app = (0, express_1.default)();
 const con = mysql.createConnection({
     host: process.env.MYSQL_DB_HOST,
     user: process.env.MYSQL_DB_USER,
     password: process.env.MYSQL_DB_PASSWORD,
     database: 'prohire'
 });
-
 con.connect();
-
 // Allow requests from localhost:3000 to this api
 const corsOptions = {
     origin: 'http://localhost:3000',
     optionsSuccessStatus: 200,
     credentials: true
-}
-
+};
 app.use(cors(corsOptions));
 app.use(session({
     secret: 'secretkey',
@@ -31,15 +30,11 @@ app.use(session({
     saveUninitialized: false,
     cookie: { secure: false }
 }));
-
-app.use(express.json());
-
+app.use(express_1.default.json());
 const upload = multer({
     dest: 'images/'
 });
-
 // Routes
-
 app.post('/admin-image-upload', upload.array('images'), (req, res) => {
     // Multer saves images the user sends via multipart/form-data
     // Then we loop through those images and save the filename to the database
@@ -47,83 +42,69 @@ app.post('/admin-image-upload', upload.array('images'), (req, res) => {
     // Params:
     // images - an array of files sent via FormData on frontend
     // proid - The ID of the pro the admin is trying to upload images for
-
     if (!req.session.admin_logged_in) {
         res.sendStatus(400);
         return;
     }
-
-    if (
-        typeof req.body.proid === 'undefined' ||
-        typeof req.files === 'undefined'
-    ) {
+    if (typeof req.body.proid === 'undefined' ||
+        typeof req.files === 'undefined') {
         res.sendStatus(400);
         return;
     }
-
     // Loop through all the images sent by the user
     for (let i = 0; i < req.files.length; i++) {
         // Add image name to database
         // Note - Currently we are just appending .jpeg to the end
         const thisImage = req.files[i].filename + '.jpeg';
         con.query('INSERT INTO professional_images (pro_id, image_name) VALUES (?, ?)', [req.body.proid, thisImage], (err, results) => {
-            if (err) throw err;
+            if (err)
+                throw err;
         });
     }
-
     res.sendStatus(200);
 });
-
 app.post('/get-all-pros', (req, res) => {
     // Get a list of all the professionals, with no filtering
     con.query('SELECT id, fullname, location_from, profession, slug FROM professionals', (err, results) => {
-        if (err) throw err;
+        if (err)
+            throw err;
         let professionals = [];
-
         results.map((pro) => {
             professionals.push({ id: pro.id, fullname: pro.fullname, location_from: pro.location_from, profession: pro.profession, slug: pro.slug });
-        })
-
+        });
         res.json(professionals);
     });
-})
-
+});
 app.get('/prodetails', (req, res) => {
     // Load data for a specific professional
     let slug = req.query.slug;
-
     con.query('SELECT id, fullname, location_from, profession, bio FROM professionals WHERE slug=?', [slug], (err, results) => {
-        if (err) throw err;
-
+        if (err)
+            throw err;
         res.json(results[0]);
-    })
-})
-
+    });
+});
 app.post('/prodetailsbyid', (req, res) => {
     // Load data for a specific professional by their id
     let id = req.body.id;
-
     if (typeof id === 'undefined') {
         res.sendStatus(400);
         return;
     }
-
     con.query('SELECT fullname, location_from, profession, bio, slug FROM professionals WHERE id=?', [id], (err, results) => {
-        if (err) throw err;
-
+        if (err)
+            throw err;
         res.json(results[0]);
-    })
-})
-
+    });
+});
 app.post('/adminlogin', (req, res) => {
     // Admin login handler
     let username = req.body.username;
     let password = req.body.password;
-
     // Grab the user's password
     con.query('SELECT password FROM admins WHERE username=?', [username], (err, results) => {
-        if (err) throw err;
-
+        if (err)
+            throw err;
         if (results.length == 0) {
             // No user with that username found
             res.json({ message: 'No user with that username found!' });
@@ -138,7 +119,7 @@ app.post('/adminlogin', (req, res) => {
                 // res.json() line and the browser was not setting cookies, likely because the data was already returned with res.json()
                 // before I had a chance to send the cookie with it
                 req.session.admin_logged_in = true;
-                res.json({ message: 'Successful login', success: true })
+                res.json({ message: 'Successful login', success: true });
                 return;
             }
             else {
@@ -148,68 +129,56 @@ app.post('/adminlogin', (req, res) => {
             }
         }
     });
-})
-
+});
 app.post('/create-professional', (req, res) => {
     // Create professional handler, only an admin should be able to do this
     if (!req.session.admin_logged_in) {
         res.sendStatus(400);
         return;
     }
-
     let fullname = req.body.fullname;
     let location_from = req.body.location_from;
     let profession = req.body.profession;
     let bio = req.body.bio;
     let slug = req.body.slug;
-
     if (typeof fullname === 'undefined' ||
         typeof location_from === 'undefined' ||
         typeof profession === 'undefined' ||
         typeof bio === 'undefined' ||
-        typeof slug === 'undefined'
-    ) {
+        typeof slug === 'undefined') {
         res.sendStatus(400);
         return;
     }
     // Insert data into db
     con.query(`INSERT INTO professionals
                 (fullname, location_from, profession, bio, slug)
-                VALUES (?, ?, ?, ?, ?)`,
-        [fullname, location_from, profession, bio, slug],
-        (err, results) => {
-            if (err) throw err;
-
-            res.json({ message: 'Created professional', success: true });
-        });
-})
-
+                VALUES (?, ?, ?, ?, ?)`, [fullname, location_from, profession, bio, slug], (err, results) => {
+        if (err)
+            throw err;
+        res.json({ message: 'Created professional', success: true });
+    });
+});
 app.post('/edit-professional', (req, res) => {
     // Update a professional's information based off their id
     if (!req.session.admin_logged_in) {
         res.sendStatus(400);
         return;
     }
-
     let id = req.body.id;
     let fullname = req.body.fullname;
     let location_from = req.body.location_from;
     let profession = req.body.profession;
     let bio = req.body.bio;
     let slug = req.body.slug;
-
-    if (
-        typeof id === 'undefined' ||
+    if (typeof id === 'undefined' ||
         typeof fullname === 'undefined' ||
         typeof location_from === 'undefined' ||
         typeof profession === 'undefined' ||
         typeof bio === 'undefined' ||
-        typeof slug === 'undefined'
-    ) {
+        typeof slug === 'undefined') {
         res.sendStatus(400);
         return;
     }
-
     // Update based on id of professional
     con.query(`UPDATE professionals
                 SET fullname=?,
@@ -218,47 +187,39 @@ app.post('/edit-professional', (req, res) => {
                 bio=?,
                 slug=?
                 WHERE
-                id=?`,
-        [fullname, location_from, profession, bio, slug, id],
-        (err, results) => {
-            if (err) throw err;
-
-            res.json({ message: 'Updated professional', success: true });
-        });
-})
-
+                id=?`, [fullname, location_from, profession, bio, slug, id], (err, results) => {
+        if (err)
+            throw err;
+        res.json({ message: 'Updated professional', success: true });
+    });
+});
 app.post('/delete-professional', (req, res) => {
     // Deletes a professional based off their id
     if (!req.session.admin_logged_in) {
         res.sendStatus(400);
         return;
     }
-
     let id = req.body.id;
-
     if (typeof id === 'undefined') {
         res.sendStatus(400);
         return;
     }
-
     // Delete from database
     con.query('DELETE FROM professionals WHERE id=?', [id], (err, results) => {
-        if (err) throw err;
-
+        if (err)
+            throw err;
         res.json({ message: "Deleted professional", success: true });
     });
 });
-
 app.get('/adminloggedin', (req, res) => {
     // Is the user logged in as an admin?
     if (req.session.admin_logged_in) {
-        res.json({ admin_logged_in: true })
+        res.json({ admin_logged_in: true });
     }
     else {
-        res.json({ admin_logged_in: false })
+        res.json({ admin_logged_in: false });
     }
-})
-
+});
 app.get('/logout', (req, res) => {
     // Destroy the user's session and essentially "logout"
     if (req.session.admin_logged_in) {
@@ -266,10 +227,8 @@ app.get('/logout', (req, res) => {
         res.json({ message: 'Logged out', success: true });
         return;
     }
-
     res.sendStatus(400);
-})
-
+});
 app.listen(8080, () => {
-    console.log('ProHire API running on port 8080')
+    console.log('ProHire API running on port 8080');
 });
