@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import ProDetails from './pages/ProDetails/ProDetails';
 import AdminLogin from './pages/AdminLogin/AdminLogin';
-import Footer from './components/Footer/Footer';
+import Footer from './components/MainFooter/Footer';
 import AdminDashboard from './pages/AdminDashboard';
 import Schedule from './components/Schedule';
 

@@ -3,21 +3,10 @@ import { Theme } from "../Theme";
 
 const MainNavbar = () => {
     return (
-        <div style={styles.navbar}>
-            <Link to="/" style={styles.logo}>ProHire</Link>
+        <div className="bg-black py-2 px-2">
+            <Link to="/" className="text-white text-decoration-none fs-4">ProHire</Link>
         </div>
     );
 }
-
-const styles = {
-    navbar: {
-        backgroundColor: Theme.colors.black,
-        padding: '15px'
-    },
-    logo: {
-        color: Theme.colors.white,
-        textDecoration: 'none'
-    }
-};
 
 export default MainNavbar;
