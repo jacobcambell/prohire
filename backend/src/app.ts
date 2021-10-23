@@ -221,24 +221,25 @@ app.post('/edit-professional', (req: Express.Request, res: Express.Response) => 
 })
 
 app.post('/delete-professional', (req: Express.Request, res: Express.Response) => {
-    // Deletes a professional based off their id
-    if (!req.session.admin_logged_in) {
-        res.sendStatus(400);
+    const check = [
+        req.body.admin_password,
+        req.body.id
+    ];
+
+    if (check.includes(undefined) || check.includes(null)) {
+        res.sendStatus(400)
         return;
     }
 
-    let id = req.body.id;
-
-    if (typeof id === 'undefined') {
-        res.sendStatus(400);
+    if (!AdminLogin(req.body.admin_password)) {
+        res.sendStatus(400)
         return;
     }
 
-    // Delete from database
-    con.query('DELETE FROM professionals WHERE id=?', [id], (err, results) => {
+    con.query('DELETE FROM professionals WHERE id=?', [req.body.id], (err, results) => {
         if (err) throw err;
 
-        res.json({ message: "Deleted professional", success: true });
+        res.json({ error: false });
     });
 });
 
