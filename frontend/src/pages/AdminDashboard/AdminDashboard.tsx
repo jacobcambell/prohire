@@ -16,10 +16,16 @@ const AdminDashboard = () => {
 
     useEffect(() => {
         // Check if user is logged in as admin
+        if (localStorage.getItem('admin_password') === null) {
+            history.push('/admin')
+        }
+        else {
+            history.push('/admin/dashboard/all')
+        }
     }, []);
 
     return (
-        <div className="bg-dark">
+        <div>
             <Nav></Nav>
             <Route path="/admin/dashboard/all">
                 <PageAll></PageAll>
