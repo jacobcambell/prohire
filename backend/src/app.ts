@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 import Express from 'express';
+import { AdminLogin } from './adminLogin';
 const cors = require('cors');
 const mysql = require('mysql');
 const session = require('express-session');
@@ -134,8 +135,7 @@ app.post('/adminlogin', (req: Express.Request, res: Express.Response) => {
         return;
     }
 
-    // Admin password is stored in .env ADMIN_PASSWORD
-    if (req.body.password === process.env.ADMIN_PASSWORD) {
+    if (AdminLogin(req.body.password)) {
         res.json({ error: false })
     }
     else {
