@@ -144,36 +144,34 @@ app.post('/adminlogin', (req: Express.Request, res: Express.Response) => {
 })
 
 app.post('/create-professional', (req: Express.Request, res: Express.Response) => {
-    // Create professional handler, only an admin should be able to do this
-    if (!req.session.admin_logged_in) {
-        res.sendStatus(400);
+    const check = [
+        req.body.admin_password,
+        req.body.fullname,
+        req.body.location_from,
+        req.body.profession,
+        req.body.bio,
+        req.body.slug
+    ];
+
+    if (check.includes(undefined) || check.includes(null)) {
+        res.sendStatus(400)
         return;
     }
 
-    let fullname = req.body.fullname;
-    let location_from = req.body.location_from;
-    let profession = req.body.profession;
-    let bio = req.body.bio;
-    let slug = req.body.slug;
-
-    if (typeof fullname === 'undefined' ||
-        typeof location_from === 'undefined' ||
-        typeof profession === 'undefined' ||
-        typeof bio === 'undefined' ||
-        typeof slug === 'undefined'
-    ) {
-        res.sendStatus(400);
+    if (!AdminLogin(req.body.admin_password)) {
+        res.sendStatus(400)
         return;
     }
+
     // Insert data into db
     con.query(`INSERT INTO professionals
                 (fullname, location_from, profession, bio, slug)
                 VALUES (?, ?, ?, ?, ?)`,
-        [fullname, location_from, profession, bio, slug],
+        [req.body.fullname, req.body.location_from, req.body.profession, req.body.bio, req.body.slug],
         (err, results) => {
             if (err) throw err;
 
-            res.json({ message: 'Created professional', success: true });
+            res.json({ error: false });
         });
 })
 
