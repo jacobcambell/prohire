@@ -1,66 +1,65 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './Pages.module.css';
 
+interface Professional {
+    id: number;
+    fullname: string;
+    location_from: string;
+    profession: string;
+    slug: string;
+}
+
 const PageAll = () => {
 
-    const [pros, setPros] = useState();
+    const [pros, setPros] = useState<Professional[]>([]);
 
     useEffect(() => {
         getPros();
     }, []);
 
     const getPros = () => {
-        fetch('http://localhost:8080/getall')
-            .then(result => result.json())
-            .then(data => {
-                setPros(data);
-            })
+        axios.post<Professional[]>(`${process.env.REACT_APP_API_ENDPOINT}/get-all-pros`).then((res) => {
+            setPros(res.data);
+        })
     }
 
     const deletePro = (id) => {
-        fetch('http://localhost:8080/delete-professional', {
-            method: 'post',
-            body: JSON.stringify({
-                id: id
-            }),
-            headers: { "Content-type": "application/json; charset=UTF-8" },
-            credentials: 'include'
+        axios.post('http://localhost:8080/delete-professional', {
+            id,
+            admin_password: localStorage.getItem('admin_password')
         })
-            .then(() => {
+            .then((res) => {
                 getPros();
             })
     }
 
     return (
-        <div className={styles.page}>
-            <p className={styles.title}>All Professionals</p>
-            <Link to="/admin/dashboard/create" className={styles.addBtn}>+ Create Professional</Link>
+        <div className="container">
+            <p className="fs-3 my-3">All Professionals</p>
+            <Link to="/admin/dashboard/create" className="btn btn-primary">+ Create Professional</Link>
 
             {
                 pros && pros.map((pro) => (
                     <div key={pro.id} className={styles.protile}>
-                        <div className={styles.split}>
-                            <p className={styles.header}>Full Name</p>
-                            <p className={styles.content}>{pro.fullname}</p>
-                        </div>
-                        <div className={styles.split}>
-                            <p className={styles.header}>Location</p>
-                            <p className={styles.content}>{pro.location_from}</p>
-                        </div>
-                        <div className={styles.split}>
-                            <p className={styles.header}>Profession</p>
-                            <p className={styles.content}>{pro.profession}</p>
-                        </div>
-                        <div className={styles.split}>
-                            <Link to={`/admin/dashboard/edit/${pro.id}`} className={`${styles.link} ${styles.edit}`}><i className="fas fa-edit"></i>Edit User</Link>
-                        </div>
-                        <div className={styles.split}>
-                            <Link to={`/admin/dashboard/manage-images/${pro.id}`} className={`${styles.link} ${styles.images}`}><i className="fas fa-images"></i>Manage Images</Link>
-                        </div>
-                        <div className={styles.split} onClick={() => { deletePro(pro.id) }}>
-                            <p className={`${styles.link} ${styles.trash}`}><i className={`fas fa-trash`}></i> Delete</p>
+                        <div className="row">
+                            <div className="col-4">
+                                <p className='m-0 fw-bold'>Full Name</p>
+                                <p className={styles.content}>{pro.fullname}</p>
+                                <Link to={`/admin/dashboard/edit/${pro.id}`} className='btn btn-success'><i className="fas fa-edit me-2"></i>Edit User</Link>
+                            </div>
+                            <div className="col-4">
+                                <p className='m-0 fw-bold'>Location</p>
+                                <p className={styles.content}>{pro.location_from}</p>
+                                <Link to={`/admin/dashboard/manage-images/${pro.id}`} className="btn btn-primary"><i className="fas fa-images me-2"></i>Images</Link>
+                            </div>
+                            <div className="col-4">
+                                <p className='m-0 fw-bold'>Profession</p>
+                                <p className={styles.content}>{pro.profession}</p>
+                                <p onClick={() => { deletePro(pro.id) }} className="btn btn-danger"><i className="fas fa-trash me-2"></i> Delete</p>
+                            </div>
                         </div>
                     </div>
                 ))
