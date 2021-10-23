@@ -78,7 +78,16 @@ app.post('/get-all-pros', (req: Express.Request, res: Express.Response) => {
     // Get a list of all the professionals, with no filtering
     con.query('SELECT id, fullname, location_from, profession, slug FROM professionals', (err, results) => {
         if (err) throw err;
-        let professionals = [];
+
+        interface Professional {
+            id: number;
+            fullname: string;
+            location_from: string;
+            profession: string;
+            slug: string;
+        }
+
+        let professionals: Professional[] = [];
 
         results.map((pro) => {
             professionals.push({ id: pro.id, fullname: pro.fullname, location_from: pro.location_from, profession: pro.profession, slug: pro.slug });
