@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,UAAU,CAAA;EACN,UAAU,EAAE,KAAK;EACjB,MAAM,EAAE,KAAK;CAChB",
-    "sources": [
-        "Dashboard.module.scss"
-    ],
-    "names": [],
-    "file": "Dashboard.module.css"
-}

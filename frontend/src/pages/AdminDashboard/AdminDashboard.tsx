@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Nav from './Nav';
+import Nav from './AdminNav/AdminNav';
 import PageAll from './pages/PageAll';
 import PageCreate from './pages/PageCreate';
 import PageEdit from './pages/PageEdit';
@@ -10,7 +10,7 @@ import PageEdit from './pages/PageEdit';
 import styles from './Dashboard.module.css';
 import PageManageImages from './pages/PageManageImages';
 
-const Dashboard = () => {
+const AdminDashboard = () => {
 
     let history = useHistory();
 
@@ -19,8 +19,13 @@ const Dashboard = () => {
     }, []);
 
     return (
-        <div className={styles.dashboard}>
+        <div className="bg-dark">
             <Nav></Nav>
+            <Route path="/admin/dashboard/all">
+                <PageAll></PageAll>
+            </Route>
+
+            {/*
             <Route path="/admin/dashboard/all">
                 <PageAll></PageAll>
             </Route>
@@ -32,9 +37,9 @@ const Dashboard = () => {
             </Route>
             <Route path="/admin/dashboard/manage-images/:id">
                 <PageManageImages></PageManageImages>
-            </Route>
+            </Route> */}
         </div>
     );
 }
 
-export default Dashboard;
+export default AdminDashboard;
