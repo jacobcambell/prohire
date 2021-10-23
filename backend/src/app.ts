@@ -233,16 +233,6 @@ app.post('/delete-professional', (req: Express.Request, res: Express.Response) =
     });
 });
 
-app.get('/adminloggedin', (req: Express.Request, res: Express.Response) => {
-    // Is the user logged in as an admin?
-    if (req.session.admin_logged_in) {
-        res.json({ admin_logged_in: true })
-    }
-    else {
-        res.json({ admin_logged_in: false })
-    }
-})
-
 app.listen(8080, () => {
     console.log('ProHire API running on port 8080')
 });
