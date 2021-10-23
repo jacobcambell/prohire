@@ -21,6 +21,7 @@ const AdminLogin = () => {
                 if (!res.data.error) {
                     // No error, so we will assume the password we sent was correct
                     localStorage.setItem('admin_password', password);
+                    history.push('/admin/dashboard')
                 }
                 else {
                     alert('Invalid password')
