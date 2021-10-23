@@ -30,11 +30,6 @@ const AdminDashboard = () => {
             <Route path="/admin/dashboard/all">
                 <PageAll></PageAll>
             </Route>
-
-            {/*
-            <Route path="/admin/dashboard/all">
-                <PageAll></PageAll>
-            </Route>
             <Route path="/admin/dashboard/create">
                 <PageCreate></PageCreate>
             </Route>
@@ -43,7 +38,7 @@ const AdminDashboard = () => {
             </Route>
             <Route path="/admin/dashboard/manage-images/:id">
                 <PageManageImages></PageManageImages>
-            </Route> */}
+            </Route>
         </div>
     );
 }
