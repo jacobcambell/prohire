@@ -1,9 +1,8 @@
 require('dotenv').config();
 
-import { query } from './mysql';
 import Express from 'express';
 import { AdminLogin } from './adminLogin';
-import * as mysql from 'mysql';
+import { query } from './mysql';
 
 const cors = require('cors');
 const session = require('express-session');
