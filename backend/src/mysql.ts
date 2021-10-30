@@ -12,7 +12,7 @@ const con = mysql.createConnection({
 con.connect();
 
 const query = (sql: string, params?: any[]) => {
-    return new Promise((resolve, reject) => {
+    return new Promise<any>((resolve, reject) => {
         con.query(sql, [params], (err, results) => {
             if (err) {
                 reject(err)
