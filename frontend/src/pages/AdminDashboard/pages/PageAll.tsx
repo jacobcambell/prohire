@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import styles from './Pages.module.css';
+import styles from './Pages.module.scss';
 
 interface Professional {
     id: number;

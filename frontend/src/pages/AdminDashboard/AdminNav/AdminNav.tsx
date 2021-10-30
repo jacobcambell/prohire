@@ -1,5 +1,5 @@
 import { Link, useHistory } from 'react-router-dom';
-import styles from './Nav.module.css';
+import styles from './Nav.module.scss';
 
 const Nav = () => {
 

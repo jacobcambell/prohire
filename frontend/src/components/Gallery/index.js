@@ -1,7 +1,7 @@
 import GalleryImage from "../GalleryImage";
-import styles from './Gallery.module.css';
+import styles from './Gallery.module.scss';
 
-const Gallery = ({images}) => {
+const Gallery = ({ images }) => {
 
     // images should be an array of strings
     return (
@@ -13,7 +13,7 @@ const Gallery = ({images}) => {
                 ))
             }
         </div>
-     );
+    );
 }
 
 export default Gallery;

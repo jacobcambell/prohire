@@ -7,7 +7,7 @@ import PageAll from './pages/PageAll';
 import PageCreate from './pages/PageCreate';
 import PageEdit from './pages/PageEdit';
 
-import styles from './Dashboard.module.css';
+import styles from './Dashboard.module.scss';
 import PageManageImages from './pages/PageManageImages';
 
 const AdminDashboard = () => {

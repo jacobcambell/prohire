@@ -1,4 +1,4 @@
-import styles from './Pages.module.css';
+import styles from './Pages.module.scss';
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';

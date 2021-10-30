@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
-import styles from './Pages.module.css';
+import styles from './Pages.module.scss';
 
 const PageEdit = () => {
 
@@ -75,7 +75,7 @@ const PageEdit = () => {
 
             <button onClick={handleForm} className={styles.addBtn}>Confirm Changes</button>
         </div>
-     );
+    );
 }
 
 export default PageEdit;
