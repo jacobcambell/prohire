@@ -1,22 +1,14 @@
 require('dotenv').config();
 
+import { query } from './mysql';
 import Express from 'express';
 import { AdminLogin } from './adminLogin';
+import * as mysql from 'mysql';
+
 const cors = require('cors');
-const mysql = require('mysql');
 const session = require('express-session');
 const multer = require('multer');
-
 const app = Express();
-
-const con = mysql.createConnection({
-    host: process.env.MYSQL_DB_HOST,
-    user: process.env.MYSQL_DB_USER,
-    password: process.env.MYSQL_DB_PASSWORD,
-    database: 'prohire'
-});
-
-con.connect();
 
 // Allow requests from localhost:3000 to this api
 const corsOptions = {
@@ -38,8 +30,6 @@ app.use(Express.json());
 const upload = multer({
     dest: 'images/'
 });
-
-// Routes
 
 app.post('/admin-image-upload', upload.array('images'), (req: Express.Request, res: Express.Response) => {
     // Multer saves images the user sends via multipart/form-data
@@ -75,54 +65,55 @@ app.post('/admin-image-upload', upload.array('images'), (req: Express.Request, r
     res.sendStatus(200);
 });
 
-app.post('/get-all-pros', (req: Express.Request, res: Express.Response) => {
+app.post('/get-all-pros', async (req: Express.Request, res: Express.Response) => {
     // Get a list of all the professionals, with no filtering
-    con.query('SELECT id, fullname, location_from, profession, slug FROM professionals', (err, results) => {
-        if (err) throw err;
+    let results = await query('SELECT id, fullname, location_from, profession, slug FROM professionals')
+    interface Professional {
+        id: number;
+        fullname: string;
+        location_from: string;
+        profession: string;
+        slug: string;
+    }
 
-        interface Professional {
-            id: number;
-            fullname: string;
-            location_from: string;
-            profession: string;
-            slug: string;
-        }
+    let professionals: Professional[] = [];
 
-        let professionals: Professional[] = [];
+    results.map((pro) => {
+        professionals.push({ id: pro.id, fullname: pro.fullname, location_from: pro.location_from, profession: pro.profession, slug: pro.slug });
+    })
 
-        results.map((pro) => {
-            professionals.push({ id: pro.id, fullname: pro.fullname, location_from: pro.location_from, profession: pro.profession, slug: pro.slug });
-        })
-
-        res.json(professionals);
-    });
+    res.json(professionals);
 })
 
-app.get('/prodetails', (req: Express.Request, res: Express.Response) => {
+app.get('/prodetails', async (req: Express.Request, res: Express.Response) => {
     // Load data for a specific professional
     let slug = req.query.slug;
 
-    con.query('SELECT id, fullname, location_from, profession, bio FROM professionals WHERE slug=?', [slug], (err, results) => {
-        if (err) throw err;
+    let results;
 
-        res.json(results[0]);
-    })
+    try {
+        results = await query('SELECT id, fullname, location_from, profession, bio FROM professionals WHERE slug=?', [slug]);
+    }
+    catch (e) {
+
+    }
+
+    res.json(results[0]);
 })
 
-app.post('/prodetailsbyid', (req: Express.Request, res: Express.Response) => {
+app.post('/prodetailsbyid', async (req: Express.Request, res: Express.Response) => {
     // Load data for a specific professional by their id
-    let id = req.body.id;
+    const check = [
+        req.body.id
+    ];
 
-    if (typeof id === 'undefined') {
+    if (check.includes(undefined)) {
         res.sendStatus(400);
         return;
     }
 
-    con.query('SELECT fullname, location_from, profession, bio, slug FROM professionals WHERE id=?', [id], (err, results) => {
-        if (err) throw err;
-
-        res.json(results[0]);
-    })
+    let results = await query('SELECT id, fullname, location_from, profession, bio, slug FROM professionals WHERE id=?', [req.body.id])
+    res.json(results[0])
 })
 
 app.post('/adminlogin', (req: Express.Request, res: Express.Response) => {
@@ -164,58 +155,58 @@ app.post('/create-professional', (req: Express.Request, res: Express.Response) =
     }
 
     // Insert data into db
-    con.query(`INSERT INTO professionals
-                (fullname, location_from, profession, bio, slug)
-                VALUES (?, ?, ?, ?, ?)`,
-        [req.body.fullname, req.body.location_from, req.body.profession, req.body.bio, req.body.slug],
-        (err, results) => {
-            if (err) throw err;
-
-            res.json({ error: false });
-        });
+    query(`INSERT INTO professionals
+            (fullname, location_from, profession, bio, slug)
+            VALUES (?, ?, ?, ?, ?)`, [req.body.fullname, req.body.location_from, req.body.profession, req.body.bio, req.body.slug])
+        .then(() => {
+            res.json({ error: false })
+        })
 })
 
 app.post('/edit-professional', (req: Express.Request, res: Express.Response) => {
     // Update a professional's information based off their id
-    if (!req.session.admin_logged_in) {
-        res.sendStatus(400);
+
+    const check = [
+        req.body.id,
+        req.body.fullname,
+        req.body.location_from,
+        req.body.profession,
+        req.body.bio,
+        req.body.slug,
+        req.body.admin_password
+    ];
+
+    if (check.includes(undefined)) {
+        res.sendStatus(400)
         return;
     }
 
-    let id = req.body.id;
-    let fullname = req.body.fullname;
-    let location_from = req.body.location_from;
-    let profession = req.body.profession;
-    let bio = req.body.bio;
-    let slug = req.body.slug;
-
-    if (
-        typeof id === 'undefined' ||
-        typeof fullname === 'undefined' ||
-        typeof location_from === 'undefined' ||
-        typeof profession === 'undefined' ||
-        typeof bio === 'undefined' ||
-        typeof slug === 'undefined'
-    ) {
-        res.sendStatus(400);
+    if (!AdminLogin(req.body.admin_password)) {
+        res.sendStatus(400)
         return;
+    }
+
+    interface Professional {
+        id: number;
+        fullname: string;
+        location_from: string;
+        profession: string;
+        slug: string;
+        bio: string;
     }
 
     // Update based on id of professional
-    con.query(`UPDATE professionals
-                SET fullname=?,
-                location_from=?,
-                profession=?,
-                bio=?,
-                slug=?
-                WHERE
-                id=?`,
-        [fullname, location_from, profession, bio, slug, id],
-        (err, results) => {
-            if (err) throw err;
-
-            res.json({ message: 'Updated professional', success: true });
-        });
+    query(`UPDATE professionals
+            SET fullname=?,
+            location_from=?,
+            profession=?,
+            bio=?,
+            slug=?
+            WHERE
+            id=?`, [req.body.fullname, req.body.location_from, req.body.profession, req.body.bio, req.body.slug, req.body.id])
+        .then(() => {
+            res.json({ success: true });
+        })
 })
 
 app.post('/delete-professional', (req: Express.Request, res: Express.Response) => {
@@ -234,11 +225,10 @@ app.post('/delete-professional', (req: Express.Request, res: Express.Response) =
         return;
     }
 
-    con.query('DELETE FROM professionals WHERE id=?', [req.body.id], (err, results) => {
-        if (err) throw err;
-
-        res.json({ error: false });
-    });
+    query('DELETE FROM professionals WHERE id=?', [req.body.id])
+        .then(() => {
+            res.json({ error: false })
+        })
 });
 
 app.listen(8080, () => {
