@@ -6,7 +6,6 @@ import { query } from './mysql';
 
 const cors = require('cors');
 const session = require('express-session');
-const multer = require('multer');
 const app = Express();
 
 // Allow requests from localhost:3000 to this api
@@ -26,41 +25,21 @@ app.use(session({
 
 app.use(Express.json());
 
-const upload = multer({
-    dest: 'images/'
-});
+// Multer
+import multer from 'multer'
+const upload = multer({ dest: 'images/' })
 
-app.post('/admin-image-upload', upload.array('images'), (req: Express.Request, res: Express.Response) => {
-    // Multer saves images the user sends via multipart/form-data
-    // Then we loop through those images and save the filename to the database
-    // Note - currently we just assume the files sent are .jpeg, which obviously we need to check file types/sizes/etc
-    // Params:
-    // images - an array of files sent via FormData on frontend
-    // proid - The ID of the pro the admin is trying to upload images for
+app.post('/admin-image-upload', upload.single('image'), (req: Express.Request, res: Express.Response) => {
+    const check = [
+        req.file,
+        req.body.proid,
+        req.body.admin_password
+    ];
 
-    if (!req.session.admin_logged_in) {
-        res.sendStatus(400);
+    if (check.includes(undefined)) {
+        res.sendStatus(400)
         return;
     }
-
-    if (
-        typeof req.body.proid === 'undefined' ||
-        typeof req.files === 'undefined'
-    ) {
-        res.sendStatus(400);
-        return;
-    }
-
-    // Loop through all the images sent by the user
-    for (let i = 0; i < req.files.length; i++) {
-        // Add image name to database
-        // Note - Currently we are just appending .jpeg to the end
-        const thisImage = req.files[i].filename + '.jpeg';
-        con.query('INSERT INTO professional_images (pro_id, image_name) VALUES (?, ?)', [req.body.proid, thisImage], (err, results) => {
-            if (err) throw err;
-        });
-    }
-
     res.sendStatus(200);
 });
 
