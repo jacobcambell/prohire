@@ -48,6 +48,16 @@ const PageManageImages = () => {
         // Append proid to the form data
         formData.append('proid', id);
 
+        // Append admin password to the form data
+        let adminPass = localStorage.getItem('admin_password');
+
+        if (adminPass === null) {
+            // Admin pass not set for some reason
+            return;
+        }
+
+        formData.append('admin_password', adminPass)
+
         axios.post(`${process.env.REACT_APP_API_ENDPOINT}/admin-image-upload`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
             .then(() => {
 
@@ -56,10 +66,10 @@ const PageManageImages = () => {
     }
 
     return (
-        <div className={styles.page}>
-            <p className={styles.title}>Managing Images for {proname}:</p>
-            <input className={styles.file} onChange={onFileChange} type="file" accept='image/*'></input>
-            <button className={styles.addBtn} onClick={handleFormSubmit}>Upload Images</button>
+        <div className='container'>
+            <p className='fs-5 pt-3'>Add Images for {proname}:</p>
+            <input className='d-block mb-3' onChange={onFileChange} type="file" accept='image/*'></input>
+            <button className='btn btn-success d-block' onClick={handleFormSubmit}>Upload Images</button>
         </div>
 
     );
