@@ -8,14 +8,7 @@ const cors = require('cors');
 const session = require('express-session');
 const app = Express();
 
-// Allow requests from localhost:3000 to this api
-const corsOptions = {
-    origin: 'http://localhost:3000',
-    optionsSuccessStatus: 200,
-    credentials: true
-}
-
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(session({
     secret: 'secretkey',
     resave: false,
