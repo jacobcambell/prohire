@@ -20,7 +20,26 @@ app.use(Express.json());
 
 // Multer
 import multer from 'multer'
-const upload = multer({ dest: 'images/' })
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'images/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '.jpg') // Appending .jpg only for now
+    }
+})
+
+const upload = multer({
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+        }
+    },
+    storage
+})
 
 app.post('/admin-image-upload', upload.single('image'), (req: Express.Request, res: Express.Response) => {
     const check = [
@@ -33,6 +52,7 @@ app.post('/admin-image-upload', upload.single('image'), (req: Express.Request, r
         res.sendStatus(400)
         return;
     }
+
     res.sendStatus(200);
 });
 
