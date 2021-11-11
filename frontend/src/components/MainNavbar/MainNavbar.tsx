@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Theme } from "../Theme";
 
 const MainNavbar = () => {
     return (

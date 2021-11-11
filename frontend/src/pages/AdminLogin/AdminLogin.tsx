@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import styles from './AdminLogin.module.scss';
 
 const AdminLogin = () => {
 

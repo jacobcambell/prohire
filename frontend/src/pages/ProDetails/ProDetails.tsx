@@ -1,9 +1,7 @@
 import { useParams } from "react-router";
-import Gallery from "../../components/Gallery";
 import MainNavbar from "../../components/MainNavbar/MainNavbar";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import styles from './ProDetails.module.scss';
 
 const ProDetails = () => {
     const { slug }: { slug: string } = useParams();

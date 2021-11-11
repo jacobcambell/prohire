@@ -1,13 +1,9 @@
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
+import { Route, useHistory } from 'react-router-dom';
 import Nav from './AdminNav/AdminNav';
 import PageAll from './pages/PageAll';
 import PageCreate from './pages/PageCreate';
 import PageEdit from './pages/PageEdit';
-
-import styles from './Dashboard.module.scss';
 import PageManageImages from './pages/PageManageImages';
 
 const AdminDashboard = () => {
