@@ -18,6 +18,9 @@ app.use(session({
 
 app.use(Express.json());
 
+// Serve images
+app.use('/images', Express.static('images'))
+
 // Multer
 import multer from 'multer'
 
