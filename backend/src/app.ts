@@ -32,6 +32,13 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     fileFilter: (req, file, cb) => {
+        // Authenticate user before allowing file upload
+        if (!AdminLogin(req.body.admin_password)) {
+            console.log('auth failed')
+            cb(null, false);
+            return;
+        }
+
         if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
             cb(null, true);
         } else {
