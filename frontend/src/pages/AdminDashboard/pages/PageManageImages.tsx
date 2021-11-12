@@ -33,21 +33,12 @@ const PageManageImages = () => {
     }
 
     const handleFormSubmit = async () => {
-        // Check if file is set
-        if (typeof file === 'undefined') {
-            return;
-        }
-
         // Create a new (empty) FormData object
         const formData = new FormData();
-
-        // Append file to the form data
-        formData.append('image', file);
 
         // Append proid to the form data
         formData.append('proid', id);
 
-        // Append admin password to the form data
         let adminPass = localStorage.getItem('admin_password');
 
         if (adminPass === null) {
@@ -55,7 +46,16 @@ const PageManageImages = () => {
             return;
         }
 
+        // Append admin password to form data
         formData.append('admin_password', adminPass)
+
+        // Check if file is set
+        if (typeof file === 'undefined') {
+            return;
+        }
+
+        // Append file to the form data
+        formData.append('image', file);
 
         axios.post(`${process.env.REACT_APP_API_ENDPOINT}/admin-image-upload`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
             .then(() => {
