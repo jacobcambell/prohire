@@ -83,14 +83,21 @@ app.post('/get-all-pros', async (req: Express.Request, res: Express.Response) =>
     res.json(professionals);
 })
 
-app.get('/prodetails', async (req: Express.Request, res: Express.Response) => {
-    // Load data for a specific professional
-    let slug = req.query.slug;
+app.get('/prodetailsbyslug', async (req: Express.Request, res: Express.Response) => {
+    // Load data for a specific professional by slug
+    const check = [
+        req.query.slug
+    ];
+
+    if (check.includes(undefined)) {
+        res.sendStatus(400)
+        return;
+    }
 
     let results;
 
     try {
-        results = await query('SELECT id, fullname, location_from, profession, bio FROM professionals WHERE slug=?', [slug]);
+        results = await query('SELECT id, fullname, location_from, profession, bio FROM professionals WHERE slug=?', [req.query.slug]);
     }
     catch (e) {
 
