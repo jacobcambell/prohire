@@ -48,7 +48,7 @@ const upload = multer({
     storage
 })
 
-app.post('/admin-image-upload', upload.single('image'), (req: Express.Request, res: Express.Response) => {
+app.post('/admin-image-upload', upload.single('image'), async (req: Express.Request, res: Express.Response) => {
     const check = [
         req.file,
         req.body.proid,
@@ -60,7 +60,21 @@ app.post('/admin-image-upload', upload.single('image'), (req: Express.Request, r
         return;
     }
 
-    res.sendStatus(200);
+    if (!AdminLogin(req.body.admin_password)) {
+        res.sendStatus(400)
+        return;
+    }
+
+    if (typeof req.file === 'undefined') {
+        // For some reason file is undefined, which it shouldn't be at this point
+        res.sendStatus(400)
+        return;
+    }
+
+    // Add reference to this uploaded image for the provided proid
+    await query('INSERT INTO professional_images (pro_id, image_name) VALUES (?, ?)', [req.body.proid, req.file.filename])
+
+    res.json({ error: false });
 });
 
 app.post('/get-all-pros', async (req: Express.Request, res: Express.Response) => {
