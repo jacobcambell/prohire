@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 interface ProDetails {
     id: number,
@@ -17,6 +17,7 @@ const PageManageImages = () => {
     const [file, setFile] = useState<File | undefined>();
 
     const { id } = useParams<{ id: string }>();
+    const history = useHistory();
 
     useEffect(() => {
         // Load pro's name into state on first render
@@ -57,9 +58,16 @@ const PageManageImages = () => {
         // Append file to the form data
         formData.append('image', file);
 
-        axios.post(`${process.env.REACT_APP_API_ENDPOINT}/admin-image-upload`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-            .then(() => {
+        interface uploadReturn {
+            error: boolean;
+        }
 
+        axios.post<uploadReturn>(`${process.env.REACT_APP_API_ENDPOINT}/admin-image-upload`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+            .then((res) => {
+                if (!res.data.error) {
+                    history.push('/admin/dashboard/all')
+                    return;
+                }
             })
             .catch(() => { })
     }
