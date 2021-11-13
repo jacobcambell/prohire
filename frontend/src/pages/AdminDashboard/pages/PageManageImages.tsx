@@ -11,10 +11,16 @@ interface ProDetails {
     slug: string
 }
 
+interface ProImage {
+    image_name: string;
+    id: number;
+}
+
 const PageManageImages = () => {
 
     const [proname, setProname] = useState('');
     const [file, setFile] = useState<File | undefined>();
+    const [proimages, setProimages] = useState<ProImage[]>([]);
 
     const { id } = useParams<{ id: string }>();
     const history = useHistory();
@@ -27,6 +33,13 @@ const PageManageImages = () => {
             .then((res) => {
                 setProname(res.data.fullname)
             })
+
+        // Load images for this pro
+        axios.post<ProImage[]>(`${process.env.REACT_APP_API_ENDPOINT}/getimagesbyproid`, {
+            proid: id
+        }).then((res) => {
+            setProimages(res.data)
+        })
     }, []);
 
     const onFileChange = (e) => {
@@ -77,9 +90,26 @@ const PageManageImages = () => {
             <p className='fs-5 pt-3'>Add Images for {proname}:</p>
             <input className='d-block mb-3' onChange={onFileChange} type="file" accept='image/*'></input>
             <button className='btn btn-success d-block' onClick={handleFormSubmit}>Upload Images</button>
+
+            <p className="fs-5 pt-3">Current Images</p>
+            {
+                proimages && proimages.map(img => (
+                    <div style={{ ...image, backgroundImage: `url(${process.env.REACT_APP_API_ENDPOINT}/images/${img.image_name})` }} key={img.id}></div>
+                ))
+            }
         </div>
 
     );
 }
 
 export default PageManageImages;
+
+const image = {
+    width: '150px',
+    height: '150px',
+    display: 'inline-block',
+    marginRight: '10px',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center'
+}

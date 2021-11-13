@@ -123,6 +123,22 @@ app.get('/prodetailsbyslug', async (req: Express.Request, res: Express.Response)
     res.json(results[0]);
 })
 
+app.post('/getimagesbyproid', async (req, res) => {
+    // Returns a list of images that belong to the requested pro
+    const check = [
+        req.body.proid
+    ];
+
+    if (check.includes(undefined)) {
+        res.sendStatus(400)
+        return;
+    }
+
+    // Get all images belonging to that pro id
+    let images = await query('SELECT id, image_name FROM professional_images WHERE pro_id=?', [req.body.proid])
+    res.json(images)
+})
+
 app.post('/prodetailsbyid', async (req: Express.Request, res: Express.Response) => {
     // Load data for a specific professional by their id
     const check = [
