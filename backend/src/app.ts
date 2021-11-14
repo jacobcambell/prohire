@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-import Express from 'express';
+import Express, { Request, Response } from 'express';
 import { AdminLogin } from './adminLogin';
 import { query } from './mysql';
 
@@ -51,7 +51,7 @@ const upload = multer({
     storage
 })
 
-app.post('/admin-image-upload', upload.single('image'), async (req: Express.Request, res: Express.Response) => {
+app.post('/admin-image-upload', upload.single('image'), async (req: Request, res: Response) => {
     const check = [
         req.file,
         req.body.proid,
@@ -80,7 +80,7 @@ app.post('/admin-image-upload', upload.single('image'), async (req: Express.Requ
     res.json({ error: false });
 });
 
-app.post('/get-all-pros', async (req: Express.Request, res: Express.Response) => {
+app.post('/get-all-pros', async (req: Request, res: Response) => {
     // Get a list of all the professionals, with no filtering
     let results = await query('SELECT id, fullname, location_from, profession, slug FROM professionals')
     interface Professional {
@@ -100,7 +100,7 @@ app.post('/get-all-pros', async (req: Express.Request, res: Express.Response) =>
     res.json(professionals);
 })
 
-app.get('/prodetailsbyslug', async (req: Express.Request, res: Express.Response) => {
+app.get('/prodetailsbyslug', async (req: Request, res: Response) => {
     // Load data for a specific professional by slug
     const check = [
         req.query.slug
@@ -123,7 +123,7 @@ app.get('/prodetailsbyslug', async (req: Express.Request, res: Express.Response)
     res.json(results[0]);
 })
 
-app.post('/getimagesbyproid', async (req, res) => {
+app.post('/getimagesbyproid', async (req: Request, res: Response) => {
     // Returns a list of images that belong to the requested pro
     const check = [
         req.body.proid
@@ -139,7 +139,7 @@ app.post('/getimagesbyproid', async (req, res) => {
     res.json(images)
 })
 
-app.post('/prodetailsbyid', async (req: Express.Request, res: Express.Response) => {
+app.post('/prodetailsbyid', async (req: Request, res: Response) => {
     // Load data for a specific professional by their id
     const check = [
         req.body.id
@@ -154,7 +154,7 @@ app.post('/prodetailsbyid', async (req: Express.Request, res: Express.Response) 
     res.json(results[0])
 })
 
-app.post('/adminlogin', (req: Express.Request, res: Express.Response) => {
+app.post('/adminlogin', (req: Request, res: Response) => {
     const check = [
         req.body.password
     ];
@@ -172,7 +172,7 @@ app.post('/adminlogin', (req: Express.Request, res: Express.Response) => {
     }
 })
 
-app.post('/create-professional', (req: Express.Request, res: Express.Response) => {
+app.post('/create-professional', (req: Request, res: Response) => {
     const check = [
         req.body.admin_password,
         req.body.fullname,
@@ -201,7 +201,7 @@ app.post('/create-professional', (req: Express.Request, res: Express.Response) =
         })
 })
 
-app.post('/edit-professional', (req: Express.Request, res: Express.Response) => {
+app.post('/edit-professional', (req: Request, res: Response) => {
     // Update a professional's information based off their id
 
     const check = [
@@ -247,7 +247,7 @@ app.post('/edit-professional', (req: Express.Request, res: Express.Response) => 
         })
 })
 
-app.post('/delete-professional', (req: Express.Request, res: Express.Response) => {
+app.post('/delete-professional', (req: Request, res: Response) => {
     const check = [
         req.body.admin_password,
         req.body.id
