@@ -1,40 +1,26 @@
 require('dotenv').config();
 
 import Express, { Request, Response } from 'express';
-import { AdminLogin } from './adminLogin';
 import { multerUpload } from './multer';
 import { query } from './mysql';
+import { adminAuth } from './middleware'
 
 const cors = require('cors');
-const session = require('express-session');
 const app = Express();
 
 app.use(cors());
-app.use(session({
-    secret: 'secretkey',
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false }
-}));
-
 app.use(Express.json());
 
 // Serve images
 app.use('/images', Express.static('images'))
 
-app.post('/admin-image-upload', multerUpload.single('image'), async (req: Request, res: Response) => {
+app.post('/admin-image-upload', adminAuth, multerUpload.single('image'), async (req: Request, res: Response) => {
     const check = [
         req.file,
-        req.body.proid,
-        req.body.admin_password
+        req.body.proid
     ];
 
     if (check.includes(undefined)) {
-        res.sendStatus(400)
-        return;
-    }
-
-    if (!AdminLogin(req.body.admin_password)) {
         res.sendStatus(400)
         return;
     }
@@ -135,7 +121,7 @@ app.post('/adminlogin', (req: Request, res: Response) => {
         return;
     }
 
-    if (AdminLogin(req.body.password)) {
+    if (req.body.password === process.env.ADMIN_PASSWORD) {
         res.json({ error: false })
     }
     else {
@@ -143,9 +129,8 @@ app.post('/adminlogin', (req: Request, res: Response) => {
     }
 })
 
-app.post('/create-professional', (req: Request, res: Response) => {
+app.post('/create-professional', adminAuth, (req: Request, res: Response) => {
     const check = [
-        req.body.admin_password,
         req.body.fullname,
         req.body.location_from,
         req.body.profession,
@@ -154,11 +139,6 @@ app.post('/create-professional', (req: Request, res: Response) => {
     ];
 
     if (check.includes(undefined) || check.includes(null)) {
-        res.sendStatus(400)
-        return;
-    }
-
-    if (!AdminLogin(req.body.admin_password)) {
         res.sendStatus(400)
         return;
     }
@@ -172,7 +152,7 @@ app.post('/create-professional', (req: Request, res: Response) => {
         })
 })
 
-app.post('/edit-professional', (req: Request, res: Response) => {
+app.post('/edit-professional', adminAuth, (req: Request, res: Response) => {
     // Update a professional's information based off their id
 
     const check = [
@@ -181,16 +161,10 @@ app.post('/edit-professional', (req: Request, res: Response) => {
         req.body.location_from,
         req.body.profession,
         req.body.bio,
-        req.body.slug,
-        req.body.admin_password
+        req.body.slug
     ];
 
     if (check.includes(undefined)) {
-        res.sendStatus(400)
-        return;
-    }
-
-    if (!AdminLogin(req.body.admin_password)) {
         res.sendStatus(400)
         return;
     }
@@ -218,18 +192,12 @@ app.post('/edit-professional', (req: Request, res: Response) => {
         })
 })
 
-app.post('/delete-professional', (req: Request, res: Response) => {
+app.post('/delete-professional', adminAuth, (req: Request, res: Response) => {
     const check = [
-        req.body.admin_password,
         req.body.id
     ];
 
     if (check.includes(undefined) || check.includes(null)) {
-        res.sendStatus(400)
-        return;
-    }
-
-    if (!AdminLogin(req.body.admin_password)) {
         res.sendStatus(400)
         return;
     }
