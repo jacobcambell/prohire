@@ -40,21 +40,7 @@ app.post('/admin-image-upload', adminAuth, multerUpload.single('image'), async (
 app.post('/get-all-pros', async (req: Request, res: Response) => {
     // Get a list of all the professionals, with no filtering
     let results = await query('SELECT id, fullname, location_from, profession, slug FROM professionals')
-    interface Professional {
-        id: number;
-        fullname: string;
-        location_from: string;
-        profession: string;
-        slug: string;
-    }
-
-    let professionals: Professional[] = [];
-
-    results.map((pro) => {
-        professionals.push({ id: pro.id, fullname: pro.fullname, location_from: pro.location_from, profession: pro.profession, slug: pro.slug });
-    })
-
-    res.json(professionals);
+    res.json(results);
 })
 
 app.get('/prodetailsbyslug', async (req: Request, res: Response) => {
