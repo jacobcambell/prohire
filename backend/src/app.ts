@@ -2,6 +2,7 @@ require('dotenv').config();
 
 import Express, { Request, Response } from 'express';
 import { AdminLogin } from './adminLogin';
+import { multerUpload } from './multer';
 import { query } from './mysql';
 
 const cors = require('cors');
@@ -21,37 +22,7 @@ app.use(Express.json());
 // Serve images
 app.use('/images', Express.static('images'))
 
-// Multer
-import multer from 'multer'
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'images/')
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '.jpg') // Appending .jpg only for now
-    }
-})
-
-const upload = multer({
-    fileFilter: (req, file, cb) => {
-        // Authenticate user before allowing file upload
-        if (!AdminLogin(req.body.admin_password)) {
-            console.log('auth failed')
-            cb(null, false);
-            return;
-        }
-
-        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
-            cb(null, true);
-        } else {
-            cb(null, false);
-        }
-    },
-    storage
-})
-
-app.post('/admin-image-upload', upload.single('image'), async (req: Request, res: Response) => {
+app.post('/admin-image-upload', multerUpload.single('image'), async (req: Request, res: Response) => {
     const check = [
         req.file,
         req.body.proid,
