@@ -26,6 +26,10 @@ const PageManageImages = () => {
     const history = useHistory();
 
     useEffect(() => {
+        loadData()
+    }, []);
+
+    const loadData = () => {
         // Load pro's name into state on first render
         axios.post<ProDetails>(`${process.env.REACT_APP_API_ENDPOINT}/prodetailsbyid`, {
             id
@@ -40,7 +44,7 @@ const PageManageImages = () => {
         }).then((res) => {
             setProimages(res.data)
         })
-    }, []);
+    }
 
     const onFileChange = (e) => {
         setFile(e.target.files[0]);
@@ -52,16 +56,6 @@ const PageManageImages = () => {
 
         // Append proid to the form data
         formData.append('proid', id);
-
-        let adminPass = localStorage.getItem('admin_password');
-
-        if (adminPass === null) {
-            // Admin pass not set for some reason
-            return;
-        }
-
-        // Append admin password to form data
-        formData.append('admin_password', adminPass)
 
         // Check if file is set
         if (typeof file === 'undefined') {
@@ -75,14 +69,33 @@ const PageManageImages = () => {
             error: boolean;
         }
 
-        axios.post<uploadReturn>(`${process.env.REACT_APP_API_ENDPOINT}/admin-image-upload`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        axios.post<uploadReturn>(
+            `${process.env.REACT_APP_API_ENDPOINT}/admin-image-upload`,
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    admin_password: localStorage.getItem('admin_password') || ''
+                }
+            }
+        )
             .then((res) => {
                 if (!res.data.error) {
-                    history.push('/admin/dashboard/all')
+                    loadData()
                     return;
                 }
             })
             .catch(() => { })
+    }
+
+    const deleteImage = (id: number) => {
+        axios.post(`${process.env.REACT_APP_API_ENDPOINT}/delete-proimage`, {
+            image_id: id
+        }, { headers: { admin_password: localStorage.getItem('admin_password') || '' } }).then(() => {
+            loadData()
+        }).catch((e) => {
+            console.log('big fat error')
+        })
     }
 
     return (
@@ -94,7 +107,9 @@ const PageManageImages = () => {
             <p className="fs-5 pt-3">Current Images</p>
             {
                 proimages && proimages.map(img => (
-                    <div style={{ ...image, backgroundImage: `url(${process.env.REACT_APP_API_ENDPOINT}/images/${img.image_name})` }} key={img.id}></div>
+                    <div style={{ ...image, backgroundImage: `url(${process.env.REACT_APP_API_ENDPOINT}/images/${img.image_name})` }} key={img.id}>
+                        <i className="fas fa-minus-circle" style={trashIcon} onClick={() => { deleteImage(img.id) }}></i>
+                    </div>
                 ))
             }
         </div>
@@ -107,9 +122,21 @@ export default PageManageImages;
 const image = {
     width: '150px',
     height: '150px',
-    display: 'inline-block',
+    display: 'inline-flex',
     marginRight: '10px',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    backgroundPosition: 'center'
+    backgroundPosition: 'center',
+    justifyContent: 'right',
+    alignItems: 'start',
+    padding: '5px'
+}
+
+const trashIcon = {
+    color: 'red',
+    fontSize: '20px',
+    backgroundColor: 'white',
+    borderRadius: '50%',
+    padding: '1px',
+    cursor: 'pointer'
 }
