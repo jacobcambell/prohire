@@ -15,9 +15,6 @@ const AdminDashboard = () => {
         if (localStorage.getItem('admin_password') === null) {
             history.push('/admin')
         }
-        else {
-            history.push('/admin/dashboard/all')
-        }
     }, []);
 
     return (
