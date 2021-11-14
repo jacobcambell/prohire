@@ -44,9 +44,8 @@ const PageEdit = () => {
             profession: pro.profession,
             bio: pro.bio,
             slug: pro.slug,
-            id: id,
-            admin_password: localStorage.getItem('admin_password')
-        })
+            id: id
+        }, { headers: { admin_password: localStorage.getItem('admin_password') || '' } })
             .then((res) => {
                 history.push('/admin/dashboard/all');
             })

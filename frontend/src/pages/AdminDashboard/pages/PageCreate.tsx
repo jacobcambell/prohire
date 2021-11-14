@@ -14,13 +14,12 @@ const PageCreate = () => {
 
     const handleForm = () => {
         axios.post(`${process.env.REACT_APP_API_ENDPOINT}/create-professional`, {
-            admin_password: localStorage.getItem('admin_password'),
             fullname: fullName,
             location_from: location,
             profession: profession,
             bio: bio,
             slug: slug
-        })
+        }, { headers: { admin_password: localStorage.getItem('admin_password') || '' } })
             .then((res) => {
                 history.push('/admin/dashboard/all')
             })

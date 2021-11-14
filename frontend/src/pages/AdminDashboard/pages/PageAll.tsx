@@ -30,6 +30,10 @@ const PageAll = () => {
         axios.post('http://localhost:8080/delete-professional', {
             id,
             admin_password: localStorage.getItem('admin_password')
+        }, {
+            headers: {
+                admin_password: localStorage.getItem('admin_password') || ''
+            }
         })
             .then((res) => {
                 getPros();
