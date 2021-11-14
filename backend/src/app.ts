@@ -82,6 +82,21 @@ app.post('/getimagesbyproid', async (req: Request, res: Response) => {
     res.json(images)
 })
 
+app.post('/delete-proimage', adminAuth, async (req: Request, res: Response) => {
+    const check = [
+        req.body.image_id
+    ];
+
+    if (check.includes(undefined) || check.includes(null)) {
+        return res.sendStatus(400);
+    }
+
+    // Delete image
+    await query('DELETE FROM professional_images WHERE id=?', [req.body.image_id])
+
+    res.sendStatus(200)
+})
+
 app.post('/prodetailsbyid', async (req: Request, res: Response) => {
     // Load data for a specific professional by their id
     const check = [
