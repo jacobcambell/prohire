@@ -40,6 +40,19 @@ app.post('/admin-image-upload', adminAuth, multerUpload.single('image'), async (
 app.post('/get-all-pros', async (req: Request, res: Response) => {
     // Get a list of all the professionals, with no filtering
     let results = await query('SELECT id, fullname, location_from, profession, slug FROM professionals')
+
+    // Get first image from database for each pro
+    for (let i = 0; i < results.length; i++) {
+        const image = await query('SELECT image_name FROM professional_images WHERE pro_id=? LIMIT 1', [results[i].id])
+
+        // Add image name to each professional
+        if (image.length === 0) {
+            results[i].image_name = null;
+        } else {
+            results[i].image_name = image[0].image_name;
+        }
+    }
+
     res.json(results);
 })
 
