@@ -8,6 +8,7 @@ interface Pro {
     location_from: string;
     profession: string;
     slug: string;
+    image_name: string;
 }
 
 const ProList = () => {
@@ -25,7 +26,7 @@ const ProList = () => {
             {
                 pros.length > 0 && pros.map((pro) => (
                     <div className="row">
-                        <ProTile key={pro.id} fullname={pro.fullname} slug={pro.slug} image={`https://placeimg.com/250/250/people`}></ProTile>
+                        <ProTile key={pro.id} fullname={pro.fullname} slug={pro.slug} image={`${process.env.REACT_APP_API_ENDPOINT}/images/${pro.image_name}`}></ProTile>
                     </div>
                 ))
             }
