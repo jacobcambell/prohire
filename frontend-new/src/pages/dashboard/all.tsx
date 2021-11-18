@@ -52,7 +52,7 @@ const PageAll = () => {
                             <div className="w-1/3">
                                 <p className='font-bold'>Full Name</p>
                                 <p className="">{pro.fullname}</p>
-                                <Link to={`/dashboard/edit/${pro.id}`} className='cursor-pointer text-sm mt-3 table bg-black text-white p-2'>Edit User</Link>
+                                <Link to={`/dashboard/edit?id=${pro.id}`} className='cursor-pointer text-sm mt-3 table bg-black text-white p-2'>Edit User</Link>
                             </div>
                             <div className="w-1/3">
                                 <p className='font-bold'>Location</p>
