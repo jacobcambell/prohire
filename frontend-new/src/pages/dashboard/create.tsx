@@ -27,29 +27,29 @@ const PageCreate = () => {
         <div>
             <MainNavbar></MainNavbar>
             <div className='w-1/3 m-auto my-3'>
-                <p className='text-xl mb-3'>Create Professional</p>
+                <p className='text-xl mb-3 text-white'>Create Professional</p>
 
-                <p className='font-bold'>Full Name</p>
+                <p className='font-bold text-white'>Full Name</p>
                 <input onChange={(e) => { setFullName(e.target.value) }} type="text"
                     className='border border-spanishgrey w-full mb-3 p-2'
                 />
 
-                <p className='font-bold'>Location</p>
+                <p className='font-bold text-white'>Location</p>
                 <input onChange={(e) => { setLocation(e.target.value) }} type="text"
                     className='border border-spanishgrey w-full mb-3 p-2'
                 />
 
-                <p className='font-bold'>Profession</p>
+                <p className='font-bold text-white'>Profession</p>
                 <input onChange={(e) => { setProfession(e.target.value) }} type="text"
                     className='border border-spanishgrey w-full mb-3 p-2'
                 />
 
-                <p className='font-bold'>Bio</p>
+                <p className='font-bold text-white'>Bio</p>
                 <textarea onChange={(e) => { setBio(e.target.value) }}
                     className='border border-spanishgrey w-full mb-3 p-2'>
                 </textarea>
 
-                <p className='font-bold'>Slug</p>
+                <p className='font-bold text-white'>Slug</p>
                 <input onChange={(e) => { setSlug(e.target.value) }} type="text"
                     className='border border-spanishgrey w-full mb-3 p-2'
                 />
