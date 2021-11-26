@@ -4,6 +4,8 @@ import Express, { Request, Response } from 'express';
 import { multerUpload } from './multer';
 import { query } from './mysql';
 import { adminAuth } from './middleware'
+import * as fs from 'fs'
+import * as path from 'path'
 
 const cors = require('cors');
 const app = Express();
@@ -104,7 +106,13 @@ app.post('/delete-proimage', adminAuth, async (req: Request, res: Response) => {
         return res.sendStatus(400);
     }
 
-    // Delete image
+    // Delete image from local directory
+    await query('SELECT image_name FROM professional_images WHERE id=?', [req.body.image_id]).then((results) => {
+        const file = path.resolve(__dirname, '../images/', results[0].image_name)
+        fs.unlinkSync(file)
+    })
+
+    // Delete image from database
     await query('DELETE FROM professional_images WHERE id=?', [req.body.image_id])
 
     res.sendStatus(200)
