@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { navigate } from "gatsby-link";
 import MainNavbar from '../components/MainNavbar/MainNavbar'
@@ -6,6 +6,12 @@ import MainNavbar from '../components/MainNavbar/MainNavbar'
 const AdminLogin = () => {
     const [password, setPassword] = useState('');
 
+    useEffect(() => {
+        // Check if already logged in
+        if (localStorage.getItem('admin_password') !== null) {
+            navigate('/dashboard')
+        }
+    }, [])
     const handleLogin = () => {
         interface AdminLoginResults {
             error: boolean;
@@ -30,9 +36,9 @@ const AdminLogin = () => {
         <div>
             <MainNavbar></MainNavbar>
             <div className="w-1/3 m-auto my-10">
-                <p className="text-2xl mb-3">Admin Login</p>
+                <p className="text-2xl mb-3 text-white">Admin Login</p>
 
-                <p className="">Password</p>
+                <p className="text-white">Password</p>
                 <input type="password" onChange={(e) => { setPassword(e.target.value) }}
                     className="border border-spanishgrey w-full px-2 py-1"
                 />
