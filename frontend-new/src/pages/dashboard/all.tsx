@@ -42,7 +42,7 @@ const PageAll = () => {
     return (
         <div>
             <MainNavbar></MainNavbar>
-            <div className="w-1/2 m-auto my-3">
+            <div className="w-1/2 m-auto my-3 text-white">
                 <p className="text-xl">All Professionals</p>
                 <Link to="/dashboard/create" className="bg-black text-white text-sm p-2 my-2 table">+ Create Professional</Link>
 
@@ -57,7 +57,7 @@ const PageAll = () => {
                             <div className="w-1/3">
                                 <p className='font-bold'>Location</p>
                                 <p className="">{pro.location_from}</p>
-                                <Link to={`/dashboard/manage-images/${pro.id}`} className="cursor-pointer text-sm mt-3 table bg-spanishgrey text-white p-2">Images</Link>
+                                <Link to={`/dashboard/manage-images?id=${pro.id}`} className="cursor-pointer text-sm mt-3 table bg-spanishgrey text-white p-2">Images</Link>
                             </div>
                             <div className="w-1/3">
                                 <p className='font-bold'>Profession</p>
